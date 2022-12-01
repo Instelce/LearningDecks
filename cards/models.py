@@ -13,7 +13,7 @@ class CardGroup(models.Model):
 
     slug = models.SlugField(unique=True, max_length=100)
     tags = TaggableManager()
-    
+
     visibility = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
@@ -21,7 +21,7 @@ class CardGroup(models.Model):
 
     def __str__(self):
         return f"{self.name} Group - {self.user.username}"
-    
+
 
 class Card(models.Model):
     group = models.ForeignKey(CardGroup, on_delete=models.CASCADE)
@@ -33,7 +33,4 @@ class Card(models.Model):
 
     def __str__(self):
         return f"{self.group.name} - {self.term} Card"
-    
 
-
-    

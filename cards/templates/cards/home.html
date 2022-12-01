@@ -1,6 +1,8 @@
-{% extends 'cards/base.html' %}
-{% load static %}
+{% extends 'base.html' %}
 
 {% block content %}
-    <h1>COUCOU</h1>
+    <header class="container centered">
+        <h1 class="text title-1">Learn With Cards</h1>
+        <a href="{% url 'register' %}" class="button">Create Account</a>
+    </header>
 {% endblock content %}

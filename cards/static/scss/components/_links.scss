@@ -1,0 +1,29 @@
+.link {
+    color: $color-accent-light;
+    position: relative;
+
+    transition: color 0.3s;
+
+    &::after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        background: $color-gray;
+        position: absolute;
+        left: 0;
+        bottom: 2px;
+        transition: transform 0.3s;
+        transform-origin: right;
+        transform: scaleX(0);
+    }
+
+    &:hover {
+        color: $color-accent;
+    }
+
+    &:hover::after {
+        width: 100%;
+        transform: scale(1);
+        transform-origin: left;
+    }
+}

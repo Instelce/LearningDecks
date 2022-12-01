@@ -1,0 +1,47 @@
+.button {
+    padding: 1rem 2rem;
+    position: relative;
+    display: inline-block;
+    border: 1px solid $color-gray;
+    color: $color-accent-light;
+    background: transparent;
+
+    cursor: pointer;
+
+    transition: color 0.3s;
+
+    &::after {
+        content: "";
+        width: 100%;
+        height: 100%;
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: $color-gray;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.3s;
+    }
+    &:hover {
+        color: $color-accent;
+    }
+    &:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+        right: 0;
+    }
+
+    &.small {
+        padding: 0.5rem 1rem;
+    }
+
+
+    &.submit {
+        transition: background 0.3s;
+        &:hover {
+            background: $color-gray;
+        }
+    }
+}

@@ -1,0 +1,88 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card {
+    width: 33%;
+    padding: 2rem 3rem;
+
+    border: 1px solid $color-gray;
+    box-shadow: 0px 8px 10px 0px $color-gray-alpha-low;
+}
+
+.form-title { margin-bottom: 1rem; text-align: center;}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    label {
+        display: block;
+        position: relative;
+        margin-bottom: 0.25rem;
+        order: -1;
+        font-size: 14px;
+
+        &::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            background: $color-gray;
+            border-radius: 100px;
+            position: absolute;
+            right: 0;
+            top: calc(50% - 4px);
+            transition: background 0.3s;
+        }
+    }
+
+    input:invalid + label::after {
+        border: 2px solid $color-red;
+    }
+    input:valid + label::after {
+        border: 2px solid $color-green;
+    }
+}
+
+.form-footer {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+
+    small {
+        text-align: center;
+        margin-top: 0.5rem;
+    }
+}
+
+input {
+    font-family: "Archivo", sans-serif;
+    font-size: 16px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    padding: 0.5rem 1rem;
+    position: relative;
+    display: inline-block;
+
+    color: $color-secondary-text;
+    outline: none;
+    border: 1px solid $color-gray;
+    border-radius: 0px;
+    background: $color-background;
+    box-shadow: inset 0px 0px 0px 0px $color-gray;
+
+    transition: box-shadow 0.3s, background 0.3s;
+
+    &:hover {
+        box-shadow: inset 0px 0px 0px 4px $color-gray;
+    }
+    &:focus {
+        background: $color-gray;
+    }
+}
