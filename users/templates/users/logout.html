@@ -2,5 +2,8 @@
 {% load static %}
 
 {% block content %}
-
+    <header class="centered">
+        <h1 class="text title-1">Logout</h1>
+        <p class="text body-2 secondary">Do you want to <a href="{% url 'login' %}" class="link">login</a> again.</p>
+    </header>
 {% endblock content %}

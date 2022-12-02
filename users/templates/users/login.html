@@ -5,18 +5,19 @@
     <header class="centered">
         <div class="form-card">
             <h3 class="form-title text title-1">Sign In</h3>
-            <form action="post">
-                <div class="form-group">
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset class="form-group">
                     {{ form.username }}
                     <label for="id_username">Username</label>
-                </div>
-                <div class="form-group">
+                </fieldset>
+                <fieldset class="form-group">
                     {{ form.password }}
                     <label for="id_password">Password</label>
-                </div>
+                </fieldset>
                 <div class="form-footer">
-                    <input class="button small submit" type="submit" value="Create Account">
-                    <small class="text caption-2 secondary">Already an account. <a href="#" class="link">Login</a></small>
+                    <button class="button" type="submit">Login</button>
+                    <small class="text caption-2 secondary">You don't have an account, <a href="{% url 'sign-in' %}" class="link">register</a>.</small>
                 </div>
             </form>
         </div>
