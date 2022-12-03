@@ -1,0 +1,32 @@
+.notification {
+    padding: 1rem 2rem;
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    
+    border: 1px solid $color-gray;
+
+    animation: appear 0.3s, disappear 0.3s 3s forwards;
+
+    &.success {
+        border: 1px solid $color-green;
+    }
+}
+
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+@keyframes disappear {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

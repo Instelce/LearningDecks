@@ -17,5 +17,11 @@ body {
 
 .scroll-container {
     display: block;
-    margin: 1rem 4rem;
+    margin: 2rem 4rem;
+}
+
+.center-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

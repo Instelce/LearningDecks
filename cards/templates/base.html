@@ -16,16 +16,16 @@
 </head>
 <body>
     <nav class="navbar">
-        <h1 class="navbar-brand">
-            <a href="{% url 'home' %}">Learn With Cards</a>
-        </h1>
-        <ul class="navbar-links">
+        <ul class="navbar-section">
+            <li><a href="{% url 'home' %}" class="navbar-brand">Learn With Cards</a></li>
             <li><a href="{% url 'card-deck-list' %}" class="link">Decks</a></li>
+        </ul>
+        <ul class="navbar-section">
             {% if user.is_authenticated %}
                 <li>{{ user.username }}</li>
 
                 <li><a href="{% url 'logout' %}" class="link">Logout</a></li>
-                <li><a href="{% url 'card-deck-create' %}" class="button small">Create Deck</a></li>
+                <li><a href="{% url 'card-deck-create' %}" class="button small">New Deck</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}" class="link">Login</a></li>
                 <li><a href="{% url 'sign-in' %}" class="button small">Sign In</a></li>
@@ -34,7 +34,7 @@
     </nav>
     {% if messages %}
     {% for message in messages %}
-        <div class="message-{{ message.tags }}">
+        <div class="notification {{ message.tags }}">
             {{ message }}
         </div>
     {% endfor %}

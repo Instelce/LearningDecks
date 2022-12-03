@@ -188,16 +188,16 @@ html.has-scroll-dragging {
   font-weight: 700;
   letter-spacing: 1px;
 }
-.navbar .navbar-links {
+.navbar .navbar-section {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.navbar .navbar-links > li {
+.navbar .navbar-section > li {
   margin-right: 2rem;
 }
-.navbar .navbar-links li:last-child {
+.navbar .navbar-section li:last-child {
   margin-right: 0px;
 }
 
@@ -269,6 +269,35 @@ html.has-scroll-dragging {
   transform-origin: left;
 }
 
+.notification {
+  padding: 1rem 2rem;
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #3c3c3c;
+  animation: appear 0.3s, disappear 0.3s 3s forwards;
+}
+.notification.success {
+  border: 1px solid #34C759;
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes disappear {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
 ::-webkit-scrollbar {
   background: transparent;
   width: 6px;
@@ -288,7 +317,13 @@ body {
 
 .scroll-container {
   display: block;
-  margin: 1rem 4rem;
+  margin: 2rem 4rem;
+}
+
+.center-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 form {
