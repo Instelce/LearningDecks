@@ -33,16 +33,14 @@ fieldset {
   }
 
   .form-help {
-    height: 0px;
+    max-height: 0;
     display: block;
     overflow: hidden;
     font-size: 14px;
     color: $color-secondary-text;
-
-    transition: height 0.3s;
   }
   .field-container:focus-within + .form-help {
-    height: auto;
+    max-height: 100%;
   }
 
   label {

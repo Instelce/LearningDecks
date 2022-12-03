@@ -8,3 +8,8 @@ inputs.forEach(input => {
 textareas.forEach(textarea => {
     textarea.placeholder = " "
 });
+
+let navbar = document.querySelector('.navbar')
+let sidebar = document.querySelector('.sidebar')
+
+// sidebar = navbar.offsetHeight
