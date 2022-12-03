@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <header class="container centered">
+    <header class="">
         <h1>LIST</h1>
 
         {% for card_deck in card_decks %}
-            {{ card_deck.name }}
-            {% for tag in card_deck.tags.all %}
-                {{tag}}
-            {% endfor %}
+            <div >
+                {{ card_deck.name }}
+                {% for tag in card_deck.tags.all %}
+                    {{ tag }}
+                {% endfor %}
+            </div>
         {% endfor %}
     </header>
 {% endblock content %}

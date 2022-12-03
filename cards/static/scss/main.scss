@@ -3,6 +3,9 @@
     './abstract/variables';
 
 @import
+    './libs/locomotive-scroll.scss';
+
+@import
     './layout/navbar',
     './layout/header',
     './layout/footer';

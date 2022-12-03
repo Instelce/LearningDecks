@@ -1,5 +1,8 @@
 .navbar {
     width: auto;
+    position: sticky;
+    top: 0;
+    left: 0;
     padding: 1rem 4rem;
     margin-bottom: 1rem;
     z-index: 1000;
@@ -8,6 +11,11 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    background: rgba(45, 45, 45, 0.8);
+    backdrop-filter: blur( 2px );
+    -webkit-backdrop-filter: blur( 2px );
+    border-bottom: 1px solid $color-gray;
 
     .navbar-brand {
         font-weight: 700;

@@ -1,109 +1,317 @@
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
-fieldset { border: none; }
+fieldset {
+  border: none;
+}
 
 .form-card {
-    width: 33%;
-    padding: 2rem 3rem;
+  width: 33%;
+  padding: 2rem 3rem;
 
-    border: 1px solid $color-gray;
-    box-shadow: 0px 8px 10px 0px $color-gray-alpha-low;
+  border: 1px solid $color-gray;
+  box-shadow: 0px 8px 10px 0px $color-gray-alpha-low;
 }
 
-.form-title { margin-bottom: 1rem; text-align: center;}
+.form-title {
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
 .form-group {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  position: relative;
+
+  .field-container {
+    width: 100%;
     position: relative;
+    display: block;
+  }
 
-    label {
-        display: block;
-        width: auto;
-        position: absolute;
-        margin-bottom: 0.25rem;
-        order: -1;
-        top: 50%;
-        left: 1rem;
-        transform: translate(0, -50%);
-        font-size: 14px;
-        color: $color-secondary-text;
+  label {
+    order: -1;
+    font-size: 14px;
+    color: $color-secondary-text;
 
-        transition: top 0.2s;
+    &::after {
+        content: "";
+        width: 8px;
+        height: 8px;
+        margin-left: .5rem;
+        display: inline-block;
+        background: $color-gray;
+        border-radius: 100px;
+        opacity: 0;
+        transition: background 0.3s, opacity 0.1s 0.2s;
+    }
+  }
 
-        &::after {
-            content: "";
-            width: 8px;
-            height: 8px;
-            background: $color-gray;
-            border-radius: 100px;
-            position: absolute;
-            right: -1rem;
-            top: calc(50% - 4px);
-            opacity: 0;
-            transition: background 0.3s, opacity 0.3s;
-        }
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="number"],
+  textarea {
+    width: 100%;
+  }
+
+  input[type="text"] + label,
+  input[type="email"] + label,
+  input[type="password"] + label,
+  input[type="number"] + label,
+  textarea + label {
+    display: block;
+    width: auto;
+    position: absolute;
+    margin-bottom: 0.25rem;
+    left: 1rem;
+    transform: translateY(-50%);
+    top: 50%;
+    left: 1rem;
+
+    transition: top 0.2s;
+
+    &::after {
+      content: "";
+      width: 8px;
+      height: 8px;
+      background: $color-gray;
+      border-radius: 100px;
+      position: absolute;
+      right: -1rem;
+      top: calc(50% - 4px);
+      opacity: 0;
+      transition: background 0.3s, opacity 0.1s 0.2s;
     }
-    input:not(:placeholder-shown) + label {
-        top: 0px;
-    }
-    input:not(:empty) {
-        background: rgb(159, 148, 148);
-    }
-    input:empty:focus + label {
-        top: 0px;
-    }
-    input:focus:invalid + label::after {
-        border: 2px solid $color-red;
-        opacity: 1;
-    }
-    input:valid + label::after {
-        border: 2px solid $color-green;
-        opacity: 1;
-    }
+  }
+
+  input:not(:placeholder-shown) + label,
+  textarea:not(:placeholder-shown) + label {
+    top: 0px;
+  }
+  input:empty:focus + label,
+  textarea:empty:focus + label {
+    top: 0px;
+  }
+
+  // Change border color of label::after
+  input:focus:invalid + label::after,
+  textarea:focus:invalid + label::after {
+    border: 2px solid $color-red;
+    opacity: 1;
+  }
+  input:valid + label::after,
+  textarea:valid + label::after {
+    border: 2px solid $color-green;
+    opacity: 1;
+  }
+
+  textarea + label {
+    top: 1rem;
+  }
 }
 
 .form-footer {
-    margin-top: 1rem;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 
-    small {
-        text-align: center;
-        margin-top: 0.5rem;
-    }
+  small {
+    text-align: center;
+    margin-top: 0.5rem;
+  }
 }
 
-input {
-    font-family: "Archivo", sans-serif;
-    font-size: 16px;
+// Input, textarea
+input,
+textarea {
+  font-family: "Archivo", sans-serif;
+  font-size: 16px;
+  outline: none;
+  border-radius: 0px;
+}
+
+textarea {
+  width: 100%;
+  min-height: 4rem;
+  height: 4rem;
+  resize: vertical;
+  box-sizing: border-box;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
-    padding: 0.5rem 1rem;
-    position: relative;
-    display: inline-block;
+input[type="password"],
+input[type="number"],
+textarea {
+  padding: 0.5rem 1rem;
+  position: relative;
+  display: inline-block;
 
-    color: $color-secondary-text;
+  color: $color-secondary-text;
+  border: 1px solid $color-gray;
+  background: $color-background;
+  box-shadow: inset 0px 0px 0px 0px $color-gray;
+
+  transition: box-shadow 0.3s, background 0.3s;
+
+  &:hover {
+    box-shadow: inset 0px 0px 0px 4px $color-gray;
+  }
+  &:focus {
+    background: $color-gray;
+  }
+}
+
+input[type="number"] {
+    -webkit-appearance: textfield;
+       -moz-appearance: textfield;
+            appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+}
+
+// Ratio, checkbox, switch
+@supports (-webkit-appearance: none) or (-moz-appearance: none) {
+  input[type="checkbox"],
+  input[type="radio"] {
+    --active: #fb9b5b;
+    --active-inner: #fff;
+    --focus: 2px rgba(251, 155, 91, 0.3);
+    --border: #3c3c3c;
+    --border-hover: #3c3c3c;
+    --background: #2d2d2d;
+    --disabled: #3c3c3c;
+    --disabled-inner: #e0c1ad;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    height: 21px;
     outline: none;
-    border: 1px solid $color-gray;
-    border-radius: 0px;
-    background: $color-background;
-    box-shadow: inset 0px 0px 0px 0px $color-gray;
-
-    transition: box-shadow 0.3s, background 0.3s;
-
-    &:hover {
+    display: inline-block;
+    vertical-align: top;
+    position: relative;
+    margin: 0;
+    cursor: pointer;
+    border: 1px solid var(--bc, var(--border));
+    background: var(--b, var(--background));
+    transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
+    &:hover:not(:checked) {
         box-shadow: inset 0px 0px 0px 4px $color-gray;
     }
-    &:focus {
-        background: $color-gray;
+    &:after {
+      content: "";
+      display: block;
+      left: 0;
+      top: 0;
+      position: absolute;
+      transition: transform var(--d-t, 0.3s) var(--d-t-e, ease),
+        opacity var(--d-o, 0.2s);
     }
+    &:checked {
+      --b: var(--active);
+      --bc: var(--active);
+      --d-o: 0.3s;
+      --d-t: 0.6s;
+      --d-t-e: cubic-bezier(0.2, 0.85, 0.32, 1.2);
+    }
+    &:disabled {
+      --b: var(--disabled);
+      cursor: not-allowed;
+      opacity: 0.9;
+      &:checked {
+        --b: var(--disabled-inner);
+        --bc: var(--border);
+      }
+      & + label {
+        cursor: not-allowed;
+      }
+    }
+    &:hover {
+      &:not(:checked) {
+        &:not(:disabled) {
+          --bc: var(--border-hover);
+        }
+      }
+    }
+    &:focus {
+      box-shadow: 0 0 0 var(--focus);
+    }
+    &:not(.switch) {
+      width: 21px;
+      &:after {
+        opacity: var(--o, 0);
+      }
+      &:checked {
+        --o: 1;
+      }
+    }
+    & + label {
+      font-size: 14px;
+      line-height: 21px;
+      display: inline-block;
+      vertical-align: top;
+      cursor: pointer;
+      margin-left: 4px;
+    }
+  }
+  input[type="checkbox"] {
+    &:not(.switch) {
+      &:after {
+        width: 5px;
+        height: 9px;
+        border: 2px solid var(--active-inner);
+        border-top: 0;
+        border-left: 0;
+        left: 7px;
+        top: 4px;
+        transform: rotate(var(--r, 20deg));
+      }
+      &:checked {
+        --r: 43deg;
+      }
+    }
+    &.switch {
+      width: 38px;
+      &:after {
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        width: 15px;
+        height: 15px;
+        background: var(--ab, var(--border));
+        transform: translateX(var(--x, 0));
+      }
+      &:checked {
+        --ab: var(--active-inner);
+        --x: 17px;
+      }
+      &:disabled {
+        &:not(:checked) {
+          &:after {
+            opacity: 0.6;
+          }
+        }
+      }
+    }
+  }
+  input[type="radio"] {
+    border-radius: 50%;
+    &:after {
+      width: 19px;
+      height: 19px;
+      border-radius: 50%;
+      background: var(--active-inner);
+      opacity: 0;
+      transform: scale(var(--s, 0.7));
+    }
+    &:checked {
+      --s: 0.5;
+    }
+  }
 }

@@ -7,7 +7,22 @@
             <h3 class="form-title text title-1">Create Deck</h3>
             <form method="POST">
                 {% csrf_token %}
-                {{ form }}
+                {% for field in form %}
+                    <fieldset class="form-group">
+                        <div class="field-container">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="text secondary error">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <p class="text body-1 secondary">{{ field.help_text }}</p>
+                        {% endif %}
+                    </fieldset>
+                {% endfor %}
                 <div class="form-footer">
                     <button class="button" type="submit">Create</button>
                 </div>
