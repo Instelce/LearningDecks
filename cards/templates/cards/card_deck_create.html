@@ -8,12 +8,6 @@
             <form method="POST">
                 {% csrf_token %}
                 {{ form }}
-                <fieldset class="form-group">
-                    <label for="id_username">Username</label>
-                </fieldset>
-                <fieldset class="form-group">
-                    <label for="id_password">Password</label>
-                </fieldset>
                 <div class="form-footer">
                     <button class="button" type="submit">Create</button>
                 </div>

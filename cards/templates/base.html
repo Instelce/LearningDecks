@@ -20,9 +20,12 @@
             <a href="{% url 'home' %}">Learn With Cards</a>
         </h1>
         <ul class="navbar-links">
+            <li><a href="{% url 'card-deck-list' %}" class="link">Decks</a></li>
             {% if user.is_authenticated %}
                 <li>{{ user.username }}</li>
+
                 <li><a href="{% url 'logout' %}" class="link">Logout</a></li>
+                <li><a href="{% url 'card-deck-create' %}" class="button small">Create Deck</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}" class="link">Login</a></li>
                 <li><a href="{% url 'sign-in' %}" class="button small">Sign In</a></li>

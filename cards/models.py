@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 
-class CardGroup(models.Model):
+class CardDeck(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=256)
@@ -20,7 +20,7 @@ class CardGroup(models.Model):
     unlock_password = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
-        return f"{self.name} Group - {self.user.username}"
+        return f"{self.name} Deck - {self.user.username}"
 
 
 # class Card(models.Model):

@@ -4,9 +4,9 @@
     <header class="container centered">
         <h1>LIST</h1>
 
-        {% for card_group in card_groups %}
-            {{ card_group.name }}
-            {% for tag in card_group.tags.all %}
+        {% for card_deck in card_decks %}
+            {{ card_deck.name }}
+            {% for tag in card_deck.tags.all %}
                 {{tag}}
             {% endfor %}
         {% endfor %}

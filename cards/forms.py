@@ -3,9 +3,9 @@ from django import forms
 from .models import *
 
 
-class CardGroupFrom(forms.ModelForm):
+class CardDeckFrom(forms.ModelForm):
     class Meta:
-        model = CardGroup
+        model = CardDeck
         fields = [
             'name',
             'description',
