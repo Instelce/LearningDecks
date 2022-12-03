@@ -4,19 +4,29 @@
 {% block content %}
     <header class="centered">
         <div class="form-card">
-            <h3 class="form-title text title-1">Sign In</h3>
+            <h3 class="form-title text title-1">Login</h3>
             <form method="POST">
                 {% csrf_token %}
-                <fieldset class="form-group">
-                    {{ form.username }}
-                    <label for="id_username">Username</label>
-                </fieldset>
-                <fieldset class="form-group">
-                    {{ form.password }}
-                    <label for="id_password">Password</label>
-                </fieldset>
+                {% for field in form %}
+                    <fieldset class="form-group">
+                        <div class="field-container">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="text body-1 secondary error">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <div class="form-help">
+                                {{ field.help_text }}
+                            </div>
+                        {% endif %}
+                    </fieldset>
+                {% endfor %}
                 <div class="form-footer">
-                    <button class="button" type="submit">Login</button>
+                    <button class="button" type="submit">Go</button>
                     <small class="text caption-2 secondary">You don't have an account, <a href="{% url 'sign-in' %}" class="link">register</a>.</small>
                 </div>
             </form>

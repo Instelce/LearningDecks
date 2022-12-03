@@ -32,6 +32,19 @@ fieldset {
     display: block;
   }
 
+  .form-help {
+    height: 0px;
+    display: block;
+    overflow: hidden;
+    font-size: 14px;
+    color: $color-secondary-text;
+
+    transition: height 0.3s;
+  }
+  .field-container:focus-within + .form-help {
+    height: auto;
+  }
+
   label {
     order: -1;
     font-size: 14px;

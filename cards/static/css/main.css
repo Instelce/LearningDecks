@@ -358,6 +358,17 @@ fieldset {
   position: relative;
   display: block;
 }
+.form-group .form-help {
+  height: 0px;
+  display: block;
+  overflow: hidden;
+  font-size: 14px;
+  color: #AFAFAF;
+  transition: height 0.3s;
+}
+.form-group .field-container:focus-within + .form-help {
+  height: auto;
+}
 .form-group label {
   order: -1;
   font-size: 14px;

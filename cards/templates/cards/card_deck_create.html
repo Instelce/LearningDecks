@@ -15,11 +15,13 @@
                         </div>
                         {% if field.errors %}
                             {% for error in field.errors %}
-                                <p class="text secondary error">{{ error }}</p>
+                                <p class="text body-1 secondary error">{{ error }}</p>
                             {% endfor %}
                         {% endif %}
                         {% if field.help_text %}
-                            <p class="text body-1 secondary">{{ field.help_text }}</p>
+                            <div class="form-help">
+                                {{ field.help_text }}
+                            </div>
                         {% endif %}
                     </fieldset>
                 {% endfor %}
