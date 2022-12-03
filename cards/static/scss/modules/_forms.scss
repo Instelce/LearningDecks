@@ -3,6 +3,8 @@ form {
     flex-direction: column;
 }
 
+fieldset { border: none; }
+
 .form-card {
     width: 33%;
     padding: 2rem 3rem;
@@ -17,13 +19,21 @@ form {
     display: flex;
     flex-direction: column;
     margin-bottom: 1rem;
+    position: relative;
 
     label {
         display: block;
-        position: relative;
+        width: auto;
+        position: absolute;
         margin-bottom: 0.25rem;
         order: -1;
+        top: 50%;
+        left: 1rem;
+        transform: translate(0, -50%);
         font-size: 14px;
+        color: $color-secondary-text;
+
+        transition: top 0.2s;
 
         &::after {
             content: "";
@@ -32,17 +42,28 @@ form {
             background: $color-gray;
             border-radius: 100px;
             position: absolute;
-            right: 0;
+            right: -1rem;
             top: calc(50% - 4px);
-            transition: background 0.3s;
+            opacity: 0;
+            transition: background 0.3s, opacity 0.3s;
         }
     }
-
-    input:invalid + label::after {
+    input:not(:placeholder-shown) + label {
+        top: 0px;
+    }
+    input:not(:empty) {
+        background: rgb(159, 148, 148);
+    }
+    input:empty:focus + label {
+        top: 0px;
+    }
+    input:focus:invalid + label::after {
         border: 2px solid $color-red;
+        opacity: 1;
     }
     input:valid + label::after {
         border: 2px solid $color-green;
+        opacity: 1;
     }
 }
 

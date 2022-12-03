@@ -210,6 +210,10 @@ form {
   flex-direction: column;
 }
 
+fieldset {
+  border: none;
+}
+
 .form-card {
   width: 33%;
   padding: 2rem 3rem;
@@ -226,13 +230,20 @@ form {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  position: relative;
 }
 .form-group label {
   display: block;
-  position: relative;
+  width: auto;
+  position: absolute;
   margin-bottom: 0.25rem;
   order: -1;
+  top: 50%;
+  left: 1rem;
+  transform: translate(0, -50%);
   font-size: 14px;
+  color: #AFAFAF;
+  transition: top 0.2s;
 }
 .form-group label::after {
   content: "";
@@ -241,15 +252,27 @@ form {
   background: #3c3c3c;
   border-radius: 100px;
   position: absolute;
-  right: 0;
+  right: -1rem;
   top: calc(50% - 4px);
-  transition: background 0.3s;
+  opacity: 0;
+  transition: background 0.3s, opacity 0.3s;
 }
-.form-group input:invalid + label::after {
+.form-group input:not(:placeholder-shown) + label {
+  top: 0px;
+}
+.form-group input:not(:empty) {
+  background: rgb(159, 148, 148);
+}
+.form-group input:empty:focus + label {
+  top: 0px;
+}
+.form-group input:focus:invalid + label::after {
   border: 2px solid #FF3B30;
+  opacity: 1;
 }
 .form-group input:valid + label::after {
   border: 2px solid #34C759;
+  opacity: 1;
 }
 
 .form-footer {

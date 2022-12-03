@@ -9,7 +9,7 @@ class CardGroup(models.Model):
 
     name = models.CharField(max_length=256)
     description = models.TextField(max_length=600)
-    lesson = models.TextField(default="")
+    lesson = models.TextField(default="", blank=True)
 
     slug = models.SlugField(unique=True, max_length=100)
     tags = TaggableManager()
@@ -17,7 +17,7 @@ class CardGroup(models.Model):
     is_visible = models.BooleanField(default=False)
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
-    unlock_password = models.IntegerField(default=0)
+    unlock_password = models.IntegerField(default=0, blank=True)
 
     def __str__(self):
         return f"{self.name} Group - {self.user.username}"
