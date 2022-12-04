@@ -14,6 +14,7 @@
 @import
     './components/buttons',
     './components/links',
+    './components/card',
     './components/notification';
 
 @import
@@ -22,3 +23,6 @@
     './modules/helpers',
     './modules/mediaqueries',
     './modules/typography';
+
+@import
+    './pages/card_deck_list';

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <form method="POST" class="centered">
+        {% csrf_token %}
+        <h1 class="text title-1">Delete deck ?</h1>
+        <button type="submit" class="button">Yes</button>
+        <a href="{% url 'card-deck-list' %}" class="button">No</a>
+    </form>
+{% endblock content %}

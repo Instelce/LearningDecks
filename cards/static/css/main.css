@@ -229,6 +229,7 @@ html.has-scroll-dragging {
   display: inline-block;
   border: 1px solid #3c3c3c;
   color: #e0c1ad;
+  text-align: center;
   background: transparent;
   cursor: pointer;
   transition: color 0.3s;
@@ -291,6 +292,41 @@ html.has-scroll-dragging {
   transform-origin: left;
 }
 
+.card {
+  overflow: hidden;
+  padding: 1rem 2rem;
+  border: 1px solid #3c3c3c;
+}
+.card .card-header {
+  display: flex;
+  justify-content: space-between;
+}
+.card .card-header .title {
+  font-size: 20px;
+  font-weight: 500;
+}
+.card .card-header .title span {
+  font-size: 14px;
+  color: #AFAFAF;
+}
+.card .card-header .dates {
+  font-size: 10px;
+  font-weight: 300;
+  color: #AFAFAF;
+}
+.card .tags-container {
+  display: flex;
+  margin-bottom: 0.5rem;
+}
+.card .tag {
+  margin-right: 0.5rem;
+  font-size: 12px;
+}
+.card .card-buttons {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
 .notification {
   padding: 1rem 2rem;
   position: absolute;
@@ -302,6 +338,9 @@ html.has-scroll-dragging {
 }
 .notification.success {
   border: 1px solid #34C759;
+}
+.notification.error {
+  border: 1px solid #FF3B30;
 }
 
 @keyframes appear {
@@ -401,12 +440,17 @@ fieldset {
 .form-group .field-container:focus-within + .form-help {
   max-height: 100%;
 }
-.form-group label {
+
+.field-container {
+  position: relative;
+  display: inline-block;
+}
+.field-container label {
   order: -1;
   font-size: 14px;
   color: #AFAFAF;
 }
-.form-group label::after {
+.field-container.indication + label::after {
   content: "";
   width: 8px;
   height: 8px;
@@ -417,18 +461,20 @@ fieldset {
   opacity: 0;
   transition: background 0.3s, opacity 0.1s 0.2s;
 }
-.form-group input[type=text],
-.form-group input[type=email],
-.form-group input[type=password],
-.form-group input[type=number],
-.form-group textarea {
+.field-container input[type=text],
+.field-container input[type=email],
+.field-container input[type=password],
+.field-container input[type=number],
+.field-container input[type=search],
+.field-container textarea {
   width: 100%;
 }
-.form-group input[type=text] + label,
-.form-group input[type=email] + label,
-.form-group input[type=password] + label,
-.form-group input[type=number] + label,
-.form-group textarea + label {
+.field-container input[type=text] + label,
+.field-container input[type=email] + label,
+.field-container input[type=password] + label,
+.field-container input[type=number] + label,
+.field-container input[type=search] + label,
+.field-container textarea + label {
   display: block;
   width: auto;
   position: absolute;
@@ -439,11 +485,7 @@ fieldset {
   left: 1rem;
   transition: top 0.2s;
 }
-.form-group input[type=text] + label::after,
-.form-group input[type=email] + label::after,
-.form-group input[type=password] + label::after,
-.form-group input[type=number] + label::after,
-.form-group textarea + label::after {
+.field-container.indication input[type=text] + label::after, .field-container.indication input[type=email] + label::after, .field-container.indication input[type=password] + label::after, .field-container.indication input[type=number] + label::after, .field-container.indication input[type=search] + label::after, .field-container.indication textarea + label::after {
   content: "";
   width: 8px;
   height: 8px;
@@ -455,25 +497,25 @@ fieldset {
   opacity: 0;
   transition: background 0.3s, opacity 0.1s 0.2s;
 }
-.form-group input:not(:placeholder-shown) + label,
-.form-group textarea:not(:placeholder-shown) + label {
+.field-container input:not(:placeholder-shown) + label,
+.field-container textarea:not(:placeholder-shown) + label {
   top: 0px;
 }
-.form-group input:empty:focus + label,
-.form-group textarea:empty:focus + label {
+.field-container input:empty:focus + label,
+.field-container textarea:empty:focus + label {
   top: 0px;
 }
-.form-group input:focus:invalid + label::after,
-.form-group textarea:focus:invalid + label::after {
+.field-container input:focus:invalid + label::after,
+.field-container textarea:focus:invalid + label::after {
   border: 2px solid #FF3B30;
   opacity: 1;
 }
-.form-group input:valid + label::after,
-.form-group textarea:valid + label::after {
+.field-container input:valid + label::after,
+.field-container textarea:valid + label::after {
   border: 2px solid #34C759;
   opacity: 1;
 }
-.form-group textarea + label {
+.field-container textarea + label {
   top: 1rem;
 }
 
@@ -508,6 +550,7 @@ input[type=text],
 input[type=email],
 input[type=password],
 input[type=number],
+input[type=search],
 textarea {
   padding: 0.5rem 1rem;
   position: relative;
@@ -522,6 +565,7 @@ input[type=text]:hover,
 input[type=email]:hover,
 input[type=password]:hover,
 input[type=number]:hover,
+input[type=search]:hover,
 textarea:hover {
   box-shadow: inset 0px 0px 0px 4px #3c3c3c;
 }
@@ -529,6 +573,7 @@ input[type=text]:focus,
 input[type=email]:focus,
 input[type=password]:focus,
 input[type=number]:focus,
+input[type=search]:focus,
 textarea:focus {
   background: #3c3c3c;
 }
@@ -680,6 +725,10 @@ input[type=number]::-webkit-outer-spin-button {
     --s: 0.5;
   }
 }
+.grid {
+  display: grid;
+}
+
 @font-face {
   font-family: "Archivo";
   src: url("../fonts/Archivo-Variable.woff2") format("woff2"), url("../fonts/Archivo-Variable.woff") format("woff"), url("../fonts/Archivo-Variable.ttf") format("truetype");
@@ -724,6 +773,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 .text.error {
   color: #FF3B30;
+}
+
+.list-grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-row-gap: 1rem;
+  grid-column-gap: 2rem;
 }
 
 /*# sourceMappingURL=main.css.map */

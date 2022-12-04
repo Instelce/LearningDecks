@@ -2,17 +2,46 @@
 
 {% block content %}
     <header class="">
-        <h1>LIST</h1>
-
+        <div class="field-container">
+            <input type="search" name="search" id="search-deck">
+            <label for="search-deck">Search deck</label>
+        </div>
+        {{ tag }}
+        {% if tag %}
+            <a href="{% url 'card-deck-list' %}" class="button small">Reset</a>
+        {% endif %}
+    </header>
+    <div class="list-grid">
         {% for card_deck in card_decks %}
-            <div >
-                {{ card_deck.name }}
-                {% for tag in card_deck.tags.all %}
-                    {{ tag }}
-                {% endfor %}
+            <div class="card">
+                <div class="card-header">
+                    <div class="title">
+                        {{ card_deck.name }}
+                        <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+                    </div>
+                    <div class="dates">
+                        <span>{{ card_deck.created_at }}</span>
+                        <span>{{ card_deck.update_at }}</span>
+                    </div>
+                </div>
+                <div class="tags-container">
+                    {% for tag in card_deck.tags.all %}
+                        <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
+                    {% endfor %}
+                </div>
+                <div class="card-body">
+
+                </div>
+                <div class="card-buttons">
+                    {% if card_deck.user == user %}
+                        <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">Update</a>
+                        <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">Delete</a>
+                    {% endif %}
+                    <a href="{% url 'card-deck-detail' card_deck.slug %}" class="button small">GO</a>
+                </div>
             </div>
         {% endfor %}
-    </header>
+    </div>
 {% endblock content %}
 
 {% block sidebar %}

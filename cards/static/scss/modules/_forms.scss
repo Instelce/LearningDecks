@@ -42,29 +42,35 @@ fieldset {
   .field-container:focus-within + .form-help {
     max-height: 100%;
   }
+}
+
+.field-container {
+  position: relative;
+  display: inline-block;
 
   label {
     order: -1;
     font-size: 14px;
     color: $color-secondary-text;
+  }
 
-    &::after {
-        content: "";
-        width: 8px;
-        height: 8px;
-        margin-left: .5rem;
-        display: inline-block;
-        background: $color-gray;
-        border-radius: 100px;
-        opacity: 0;
-        transition: background 0.3s, opacity 0.1s 0.2s;
-    }
+  &.indication + label::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-left: .5rem;
+    display: inline-block;
+    background: $color-gray;
+    border-radius: 100px;
+    opacity: 0;
+    transition: background 0.3s, opacity 0.1s 0.2s;
   }
 
   input[type="text"],
   input[type="email"],
   input[type="password"],
   input[type="number"],
+  input[type="search"],
   textarea {
     width: 100%;
   }
@@ -73,6 +79,7 @@ fieldset {
   input[type="email"] + label,
   input[type="password"] + label,
   input[type="number"] + label,
+  input[type="search"] + label,
   textarea + label {
     display: block;
     width: auto;
@@ -84,19 +91,24 @@ fieldset {
     left: 1rem;
 
     transition: top 0.2s;
+  }
 
-    &::after {
-      content: "";
-      width: 8px;
-      height: 8px;
-      background: $color-gray;
-      border-radius: 100px;
-      position: absolute;
-      right: -1rem;
-      top: calc(50% - 4px);
-      opacity: 0;
-      transition: background 0.3s, opacity 0.1s 0.2s;
-    }
+  &.indication input[type="text"] + label::after,
+  &.indication input[type="email"] + label::after,
+  &.indication input[type="password"] + label::after,
+  &.indication input[type="number"] + label::after,
+  &.indication input[type="search"] + label::after,
+  &.indication textarea + label::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: $color-gray;
+    border-radius: 100px;
+    position: absolute;
+    right: -1rem;
+    top: calc(50% - 4px);
+    opacity: 0;
+    transition: background 0.3s, opacity 0.1s 0.2s;
   }
 
   input:not(:placeholder-shown) + label,
@@ -158,6 +170,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
+input[type="search"],
 textarea {
   padding: 0.5rem 1rem;
   position: relative;

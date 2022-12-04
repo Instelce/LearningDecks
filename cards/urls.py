@@ -6,5 +6,9 @@ from .views import *
 urlpatterns = [
     path("", home, name="home"),
     path("decks/", CardDeckListView.as_view(), name="card-deck-list"),
-    path("create-deck/", card_deck_create_view, name="card-deck-create")
+    path("decks/tag/<slug>/", card_deck_tagged, name="card-deck-tagged"),
+    path("create-deck/", card_deck_create_view, name="card-deck-create"),
+    path("decks/<slug>/", card_deck_detail_view, name="card-deck-detail"),
+    path("decks/<slug>/update/", card_deck_update_view, name="card-deck-update"),
+    path("decks/<slug>/delete/", card_deck_delete_view, name="card-deck-delete")
 ]

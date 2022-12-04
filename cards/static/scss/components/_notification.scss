@@ -11,6 +11,9 @@
     &.success {
         border: 1px solid $color-green;
     }
+    &.error {
+        border: 1px solid $color-red;
+    }
 }
 
 @keyframes appear {

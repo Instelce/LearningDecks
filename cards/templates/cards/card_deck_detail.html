@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <header class="centered">
+        <h1 class="text title-1">
+            {{ card_deck.name }}
+            <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+        </h1>
+    </header>
+{% endblock content %}

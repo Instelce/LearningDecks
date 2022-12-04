@@ -1,0 +1,42 @@
+.card {
+    overflow: hidden;
+    padding: 1rem 2rem;
+    border: 1px solid $color-gray;
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+
+        .title {
+            font-size: 20px;
+            font-weight: 500;
+            
+            span {
+                font-size: 14px;
+                color: $color-secondary-text;
+            }
+        }
+
+        .dates {
+            font-size: 10px;
+            font-weight: 300;
+            color: $color-secondary-text;
+        }
+    }
+
+    .tags-container {
+        display: flex;
+        margin-bottom: .5rem;
+    }
+    .tag {
+        margin-right: .5rem;
+        font-size: 12px;
+    }
+    .card-body {
+    }
+
+    .card-buttons {
+        display: grid;
+        grid-template-columns: auto auto auto;
+    }
+}
