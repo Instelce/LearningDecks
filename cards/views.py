@@ -16,6 +16,7 @@ def home(request):
     return render(request, "cards/home.html", {})
 
 
+# Card Deck Views (list, tagged, create, update, delete)
 def card_deck_list_view(request):
     card_decks = CardDeck.objects.filter(is_visible=True)
 
@@ -43,12 +44,14 @@ def card_deck_tagged(request, slug):
 
 def card_deck_detail_view(request, slug):
     card_deck = get_object_or_404(CardDeck, slug=slug)
-
+    
+    # Get cards of card deck
     try:
         cards = Card.objects.filter(deck=card_deck)
     except Card.DoesNotExist:
         cards = None
-
+    
+    # Create card form
     if request.POST and card_deck.user == request.user:
         card_form = CardForm(request.POST)
         if card_form.is_valid():
@@ -70,7 +73,7 @@ def card_deck_detail_view(request, slug):
 @login_required
 def card_deck_create_view(request):
     if request.POST:
-        form = CardDeckFrom(request.POST)
+        form = CardDeckForm(request.POST)
         if form.is_valid():
             new_card_deck = form.save(commit=False)
             new_card_deck.user = request.user
@@ -80,19 +83,20 @@ def card_deck_create_view(request):
             messages.success(request, f"Deck has been created")
             return redirect('card-deck-list')
     else:
-        form = CardDeckFrom()
+        form = CardDeckForm()
     return render(request, 'cards/card_deck_create.html', {'form': form})
 
 
 @login_required
 def card_deck_update_view(request, slug):
+    # Checks if the connected user is the owner of the deck
     if not CardDeck.objects.filter(user=request.user, slug=slug).exists():
         messages.error(request, f"You can't update this deck !")
         return redirect('card-deck-list')
     else:
         card_deck = get_object_or_404(CardDeck, slug=slug)
 
-        form = CardDeckFrom(request.POST or None, instance=card_deck)
+        form = CardDeckForm(request.POST or None, instance=card_deck)
         if form.is_valid():
             form.save()
             messages.success(request, f"Deck has been updated")
@@ -103,6 +107,7 @@ def card_deck_update_view(request, slug):
 
 @login_required
 def card_deck_delete_view(request, slug):
+    # Checks if the connected user is the owner of the deck
     if not CardDeck.objects.filter(user=request.user, slug=slug).exists():
         messages.error(request, f"You can't delete this deck !")
         return redirect(request.META.get('HTTP_REFERER'), '/')
@@ -113,3 +118,37 @@ def card_deck_delete_view(request, slug):
             messages.success(request, f"Deck has been deleted")
             return redirect('card-deck-list')
         return render(request, "cards/card_deck_delete.html", {})
+
+
+# Card Views (update, delete)
+@login_required
+def card_update_view(request, deck_slug, card_id):
+    # Checks if the connected user is the owner of the card's deck
+    if not CardDeck.objects.filter(user=request.user, slug=deck_slug).exists():
+        messages.error(request, f"You can't update this card, you are not the owner of the card deck !")
+        return redirect('card-deck-detail', slug=deck_slug)
+    else:
+        card = get_object_or_404(Card, id=card_id)
+        form = CardForm(request.POST or None, instance=card)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f"Card has been updated")
+            return redirect('card-deck-detail', slug=deck_slug)
+
+        return render(request, "cards/card_update.html", {"form": form})
+
+
+@login_required
+def card_delete_view(request, deck_slug, card_id):
+    # Checks if the connected user is the owner of the card's deck
+    if not CardDeck.objects.filter(user=request.user, slug=deck_slug).exists():
+        messages.error(request, f"You can't delete this card, you are not the owner of the card deck !")
+        return redirect('card-deck-detail', slug=deck_slug)
+    else:
+        card = get_object_or_404(Card, id=card_id)
+        if request.POST:
+            card.delete()
+            messages.success(request, f"Card has been deleted")
+            return redirect('card-deck-detail', slug=deck_slug)
+
+        return render(request, "cards/card_delete.html", {})

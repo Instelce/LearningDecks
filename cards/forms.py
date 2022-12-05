@@ -3,7 +3,7 @@ from django import forms
 from .models import *
 
 
-class CardDeckFrom(forms.ModelForm):
+class CardDeckForm(forms.ModelForm):
     class Meta:
         model = CardDeck
         fields = [

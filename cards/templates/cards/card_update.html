@@ -1,16 +1,13 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <header class="centered">
-        <h1 class="text title-1">
-            {{ card_deck.name }}
-            <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
-        </h1>
-        {% if card_deck.user == user %}        
+        <div class="form-card">
+            <h3 class="form-title text title-1">Create Card</h3>
             <form method="POST">
                 {% csrf_token %}
-                <h2 class="text sub-1">New Card</h2>
-                {% for field in card_form %}
+                {% for field in form %}
                     <fieldset class="form-group">
                         <div class="field-container indication">
                             {{ field }}
@@ -28,20 +25,10 @@
                         {% endif %}
                     </fieldset>
                 {% endfor %}
-                <button type="submit" class="button small">+</button>
-            </form>
-        {% endif %}
-        <div class="list-grid">
-            {% for card in cards %}
-                <div class="card">
-                    {{ card.term }}
-                    {{ card.definition }}
-                    {% if card.deck.user == user %}                    
-                        <a href="{% url 'card-update' card.deck.slug card.id %}" class="link">Update</a>
-                        <a href="{% url 'card-delete' card.deck.slug card.id %}" class="link">Delete</a>
-                    {% endif %}
+                <div class="form-footer">
+                    <button class="button" type="submit">Update</button>
                 </div>
-            {% endfor %}
+            </form>
         </div>
     </header>
 {% endblock content %}
