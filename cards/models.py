@@ -23,12 +23,12 @@ class CardDeck(models.Model):
         return f"{self.name} Deck - {self.user.username}"
 
 
-# class Card(models.Model):
-#     group = models.ForeignKey(CardGroup, on_delete=models.CASCADE)
+class Card(models.Model):
+    deck = models.ForeignKey(CardDeck, on_delete=models.CASCADE)
 
-#     term = models.CharField(max_length=256)
-#     definition = models.TextField(max_length=600)
+    term = models.CharField(max_length=256)
+    definition = models.TextField(max_length=600)
 
-#     def __str__(self):
-#         return f"{self.group.name} - {self.term} Card"
+    def __str__(self):
+        return f"{self.group.name} - {self.term} Card"
 

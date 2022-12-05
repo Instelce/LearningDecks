@@ -5,7 +5,7 @@ from .views import *
 
 urlpatterns = [
     path("", home, name="home"),
-    path("decks/", CardDeckListView.as_view(), name="card-deck-list"),
+    path("decks/", card_deck_list_view, name="card-deck-list"),
     path("decks/tag/<slug>/", card_deck_tagged, name="card-deck-tagged"),
     path("create-deck/", card_deck_create_view, name="card-deck-create"),
     path("decks/<slug>/", card_deck_detail_view, name="card-deck-detail"),

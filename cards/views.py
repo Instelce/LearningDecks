@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.template import context
 from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 from django.template.defaultfilters import slugify
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
 from django.contrib import messages
 from taggit.models import Tag
 
@@ -14,15 +16,24 @@ def home(request):
     return render(request, "cards/home.html", {})
 
 
-class CardDeckListView(ListView):
-    model = CardDeck
-    template_name = "cards/card_deck_list.html"
-    context_object_name = 'card_decks'
+def card_deck_list_view(request):
+    card_decks = CardDeck.objects.filter(is_visible=True)
+
+    if request.user:
+        user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False)
+    else:
+        user_card_decks = None
+
+    context = {
+        'card_decks': card_decks,
+        'user_card_decks': user_card_decks
+    }
+    return render(request, "cards/card_deck_list.html", context)    
 
 
 def card_deck_tagged(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
-    card_decks = CardDeck.objects.filter(tags=tag) # Filter with tag
+    card_decks = CardDeck.objects.filter(tags=tag, is_visible=True) # Filter with tag
     context = {
         'tag': tag,
         'card_decks': card_decks
@@ -31,8 +42,27 @@ def card_deck_tagged(request, slug):
 
 
 def card_deck_detail_view(request, slug):
+    card_deck = get_object_or_404(CardDeck, slug=slug)
+
+    try:
+        cards = Card.objects.filter(deck=card_deck)
+    except Card.DoesNotExist:
+        cards = None
+
+    if request.POST and card_deck.user == request.user:
+        card_form = CardForm(request.POST)
+        if card_form.is_valid():
+            new_card = card_form.save(commit=False)
+            new_card.deck = card_deck
+            new_card.save()
+            return redirect('card-deck-detail', slug=slug)
+    else:
+        card_form = CardForm(request.POST)
+
     context = {
-        "card_deck": CardDeck.objects.get(slug=slug)
+        "card_deck": card_deck,
+        "card_form": card_form,
+        "cards": cards
     }
     return render(request, "cards/card_deck_detail.html", context)
 
@@ -75,7 +105,7 @@ def card_deck_update_view(request, slug):
 def card_deck_delete_view(request, slug):
     if not CardDeck.objects.filter(user=request.user, slug=slug).exists():
         messages.error(request, f"You can't delete this deck !")
-        return redirect('card-deck-list')
+        return redirect(request.META.get('HTTP_REFERER'), '/')
     else:
         card_deck = get_object_or_404(CardDeck, slug=slug)
         if request.POST:

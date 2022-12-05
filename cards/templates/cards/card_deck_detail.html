@@ -6,5 +6,36 @@
             {{ card_deck.name }}
             <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
         </h1>
+        {% if card_deck.user == user %}        
+            <form method="POST">
+                {% csrf_token %}
+                <h2 class="text sub-1">New Card</h2>
+                {% for field in card_form %}
+                    <fieldset class="form-group">
+                        <div class="field-container indication">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <p class="text body-1 secondary error">{{ error }}</p>
+                            {% endfor %}
+                        {% endif %}
+                        {% if field.help_text %}
+                            <div class="form-help">
+                                {{ field.help_text }}
+                            </div>
+                        {% endif %}
+                    </fieldset>
+                {% endfor %}
+                <button type="submit" class="button small">+</button>
+            </form>
+        {% endif %}
+        {% for card in cards %}
+            <div class="card">
+                {{ card.term }}
+                {{ card.definition }}
+            </div>
+        {% endfor %}
     </header>
 {% endblock content %}

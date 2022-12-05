@@ -14,3 +14,12 @@ class CardDeckFrom(forms.ModelForm):
             'is_visible',
             'unlock_password'
         ]
+
+
+class CardForm(forms.ModelForm):
+    class Meta:
+        model = Card
+        fields = [
+            'term',
+            'definition'
+        ]
