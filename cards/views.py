@@ -16,6 +16,15 @@ def home(request):
     return render(request, "cards/home.html", {})
 
 
+# Dashboard
+def dashboard(request):
+    user_card_decks = CardDeck.objects.filter(user=request.user)
+    context = {
+        'card_decks': user_card_decks
+    }
+    return render(request, "cards/dashboard.html", context)
+
+
 # Card Deck Views (list, tagged, create, update, delete)
 def card_deck_list_view(request):
     card_decks = CardDeck.objects.filter(is_visible=True)

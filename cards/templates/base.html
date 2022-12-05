@@ -19,6 +19,9 @@
         <ul class="navbar-section">
             <li><a href="{% url 'home' %}" class="navbar-brand">Learn With Cards</a></li>
             <li><a href="{% url 'card-deck-list' %}" class="link">Decks</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}" class="link">Dashboard</a></li>
+            {% endif %}
         </ul>
         <span>
             {{ user.username | capfirst }}
