@@ -2,33 +2,113 @@
 {% load static %}
 
 {% block content %}
-    <header class="centered">
-        <div class="form-card">
-            <h3 class="form-title text title-1">Create Deck</h3>
-            <form method="POST">
-                {% csrf_token %}
-                {% for field in form %}
-                    <fieldset class="form-group">
-                        <div class="field-container indication">
-                            {{ field }}
-                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-                        </div>
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                                <p class="text body-1 secondary error">{{ error }}</p>
-                            {% endfor %}
-                        {% endif %}
-                        {% if field.help_text %}
-                            <div class="form-help">
-                                {{ field.help_text }}
-                            </div>
-                        {% endif %}
-                    </fieldset>
-                {% endfor %}
-                <div class="form-footer">
-                    <button class="button" type="submit">Create</button>
-                </div>
-            </form>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-header">
+            <h3 class="text title-1">Create Deck</h3>
+            <button class="button" type="submit">Create</button>
         </div>
-    </header>
+        <div class="grid column-2">
+            <div class="grid">
+                <fieldset class="form-group">
+                    <div class="field-container indication">
+                        {{ form.name }}
+                        <label for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+                    </div>
+                    {% if form.name.errors %}
+                        {% for error in form.name.errors %}
+                            <p class="text body-1 secondary error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.name.help_text %}
+                        <div class="form-help">
+                            {{ form.name.help_text }}
+                        </div>
+                    {% endif %}
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="field-container indication">
+                        {{ form.tags }}
+                        <label for="{{ form.tags.id_for_label }}">{{ form.tags.label }}</label>
+                    </div>
+                    {% if form.tags.errors %}
+                        {% for error in form.tags.errors %}
+                            <p class="text body-1 secondary error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.tags.help_text %}
+                        <div class="form-help">
+                            {{ form.tags.help_text }}
+                        </div>
+                    {% endif %}
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="field-container indication">
+                        {{ form.unlock_password }}
+                        <label for="{{ form.unlock_password.id_for_label }}">{{ form.unlock_password.label }}</label>
+                    </div>
+                    {% if form.unlock_password.errors %}
+                        {% for error in form.unlock_password.errors %}
+                            <p class="text body-1 secondary error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.unlock_password.help_text %}
+                        <div class="form-help">
+                            {{ form.unlock_password.help_text }}
+                        </div>
+                    {% endif %}
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="field-container indication">
+                        {{ form.description }}
+                        <label for="{{ form.description.id_for_label }}">{{ form.description.label }}</label>
+                    </div>
+                    {% if form.description.errors %}
+                        {% for error in form.description.errors %}
+                            <p class="text body-1 secondary error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.description.help_text %}
+                        <div class="form-help">
+                            {{ form.description.help_text }}
+                        </div>
+                    {% endif %}
+                </fieldset>
+                <fieldset class="form-group">
+                    <div class="field-container indication">
+                        {{ form.is_visible }}
+                        <label for="{{ form.is_visible.id_for_label }}">{{ form.is_visible.label }}</label>
+                    </div>
+                    {% if form.is_visible.errors %}
+                        {% for error in form.is_visible.errors %}
+                            <p class="text body-1 secondary error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.is_visible.help_text %}
+                        <div class="form-help">
+                            {{ form.is_visible.help_text }}
+                        </div>
+                    {% endif %}
+                </fieldset>
+            </div>
+            <div>
+                <fieldset class="form-group h-fill">
+                    <div class="field-container indication">
+                        {{ form.lesson }}
+                        <label for="{{ form.lesson.id_for_label }}">{{ form.lesson.label }}</label>
+                    </div>
+                    {% if form.lesson.errors %}
+                        {% for error in form.lesson.errors %}
+                            <p class="text body-1 secondary error">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                    {% if form.lesson.help_text %}
+                        <div class="form-help">
+                            {{ form.lesson.help_text }}
+                        </div>
+                    {% endif %}
+                </fieldset>
+            </div>
+        </div>
+    </form>
 {% endblock content %}

@@ -1,0 +1,27 @@
+// Margin, padding (mp) mixins
+$max: 20;
+$offset: 1;
+$unit: 'rem';
+
+@mixin mp-loop($className, $styleName) {
+    $i: 0;
+    @while $i <= $max {
+        #{$className + $i} {
+            #{$styleName}: #{$i + $unit};
+        }
+        $i: $i + $offset;
+    }
+}
+
+// Margins
+@include mp-loop('.mt-', 'margin-top');
+@include mp-loop('.mr-', 'margin-right');
+@include mp-loop('.mb-', 'margin-bottom');
+@include mp-loop('.ml-', 'margin-left');
+@include mp-loop('.mx-', 'margin');
+// Paddings
+@include mp-loop('.pt-', 'padding-top');
+@include mp-loop('.pr-', 'padding-right');
+@include mp-loop('.pb-', 'padding-bottom');
+@include mp-loop('.pl-', 'padding-left');
+@include mp-loop('.px-', 'padding');

@@ -7,24 +7,29 @@ fieldset {
   border: none;
 }
 
-.form-card {
-  width: 33%;
-  padding: 2rem 3rem;
-
-  border: 1px solid $color-gray;
-  box-shadow: 0px 8px 10px 0px $color-gray-alpha-low;
-}
-
-.form-title {
+.form-header {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 2rem;
-  text-align: center;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
   position: relative;
+
+  &.h-fill {
+    height: 100%;
+    box-sizing: border-box;
+
+    .field-container {
+      height: 100%;
+    }
+    input,
+    textarea {
+      height: 100%;
+    }
+  }
 
   .field-container {
     width: 100%;
@@ -53,7 +58,6 @@ fieldset {
     font-size: 14px;
     color: $color-secondary-text;
   }
-
   &.indication + label::after {
     content: "";
     width: 8px;

@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <header class="ccentered">
-        <h1 class="text title-1">Learn With Cards</h1>
-        <a href="{% url 'sign-in' %}" class="button">Create Account</a>
+    <header class="fill flex centered">
+        <div class="flex column">
+            <h1 class="text title-1 mb-1">Learn With Cards</h1>
+            <a href="{% url 'sign-in' %}" class="button">Create Account</a>
+        </div>
     </header>
 {% endblock content %}

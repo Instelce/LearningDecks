@@ -22,6 +22,7 @@
     &.caption-2 { font-size: 12px; }
 
     &.secondary { color: $color-secondary-text; }
+    &.error { color: $color-red-light; }
 
-    &.error { color: $color-red; }
+    &.center { text-align: center; }
 }

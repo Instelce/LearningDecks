@@ -1,7 +1,12 @@
 .card {
+    height: auto;
     overflow: hidden;
-    padding: 1rem 2rem;
+    display: inline-block;
+    // padding: 1rem 2rem;
     border: 1px solid $color-gray;
+    transition: height 0.3s;
+
+    .card-padding { padding: 1rem 2rem; }
 
     .card-header {
         display: flex;
@@ -10,7 +15,7 @@
         .title {
             font-size: 20px;
             font-weight: 500;
-            
+
             span {
                 font-size: 14px;
                 color: $color-secondary-text;
@@ -18,6 +23,8 @@
         }
 
         .dates {
+            display: flex;
+            align-items: center;
             font-size: 10px;
             font-weight: 300;
             color: $color-secondary-text;
@@ -36,7 +43,36 @@
     }
 
     .card-buttons {
+        display: flex;
+    }
+
+    .card-main-button {
+        width: 100%;
+        border: none;
+        border-top: 1px solid $color-gray;
+    }
+
+    .card-secondary-buttons {
+        width: 0px;
         display: grid;
-        grid-template-columns: auto auto auto;
+        grid-template-columns: auto auto;
+        transition: transform 0.3s, width 0.3s ease;
+
+        button,
+        a {
+            border: none;
+            border-top: 1px solid $color-gray;
+            border-right: 1px solid $color-gray;
+        }
+        a:last-child {
+            border-right: none;
+        }
+    }
+
+    &:hover .card-secondary-buttons {
+        width: 100%;
+    }
+    &:hover .card-secondary-buttons a:first-child {
+        border-left: 1px solid $color-gray;
     }
 }
