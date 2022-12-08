@@ -32,3 +32,15 @@ class Card(models.Model):
     def __str__(self):
         return f"{self.group.name} - {self.term} Card"
 
+
+class Question(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    deck = models.ForeignKey(CardDeck, on_delete=models.CASCADE)
+    content = models.TextField(max_length=600)
+
+
+class Responce(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    content = models.TextField(max_length=600)
+    rate = models.IntegerField(default=0)

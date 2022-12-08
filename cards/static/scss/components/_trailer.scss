@@ -1,0 +1,17 @@
+.trailer {
+    height: 10px;
+    width: 10px;
+    background: #fff;
+    border-radius: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 10000;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .5s ease;
+}
+
+body:hover .trailer {
+    opacity: 1;
+}

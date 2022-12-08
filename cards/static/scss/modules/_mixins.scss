@@ -1,9 +1,5 @@
 // Margin, padding (mp) mixins
-$max: 20;
-$offset: 1;
-$unit: 'rem';
-
-@mixin mp-loop($className, $styleName) {
+@mixin loop($className, $styleName, $max, $offset, $unit) {
     $i: 0;
     @while $i <= $max {
         #{$className + $i} {
@@ -14,14 +10,16 @@ $unit: 'rem';
 }
 
 // Margins
-@include mp-loop('.mt-', 'margin-top');
-@include mp-loop('.mr-', 'margin-right');
-@include mp-loop('.mb-', 'margin-bottom');
-@include mp-loop('.ml-', 'margin-left');
-@include mp-loop('.mx-', 'margin');
+@include loop('.mt-', 'margin-top', 20, 1, 'rem');
+@include loop('.mr-', 'margin-right', 20, 1, 'rem');
+@include loop('.mb-', 'margin-bottom', 20, 1, 'rem');
+@include loop('.ml-', 'margin-left', 20, 1, 'rem');
+@include loop('.mx-', 'margin', 20, 1, 'rem');
 // Paddings
-@include mp-loop('.pt-', 'padding-top');
-@include mp-loop('.pr-', 'padding-right');
-@include mp-loop('.pb-', 'padding-bottom');
-@include mp-loop('.pl-', 'padding-left');
-@include mp-loop('.px-', 'padding');
+@include loop('.pt-', 'padding-top', 20, 1, 'rem');
+@include loop('.pr-', 'padding-right', 20, 1, 'rem');
+@include loop('.pb-', 'padding-bottom', 20, 1, 'rem');
+@include loop('.pl-', 'padding-left', 20, 1, 'rem');
+@include loop('.px-', 'padding', 20, 1, 'rem');
+// Bold
+@include loop('.b-', 'font-weight', 900, 100, '');

@@ -1,94 +1,112 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <header class="mb-2">
+    <div>
+    <header class="list-header mb-2">
         <div class="field-container">
             <input type="search" name="search" id="search-deck">
             <label for="search-deck">Search deck</label>
         </div>
-        {{ tag }}
-        {% if tag %}
-            <a href="{% url 'card-deck-list' %}" class="button small">Reset</a>
-        {% endif %}
-    </header>
-    {% if user_card_decks %}
-        <div class="mb-2">
-            <h3 class="text sub-1 mb-1">Private Decks</h3>
-            <div class="grid column-3">
-                {% for card_deck in user_card_decks %}
-                    <div class="card">
-                        <div class="card-padding">
-                            <div class="card-header">
-                                <div class="title">
-                                    {{ card_deck.name }}
-                                    <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
-                                </div>
-                                <div class="dates">
-                                    <span>{{ card_deck.created_at }}</span>
-                                    <span>{{ card_deck.update_at }}</span>
-                                </div>
-                            </div>
-                            <div class="tags-container">
-                                {% for tag in card_deck.tags.all %}
-                                    <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
-                                {% endfor %}
-                            </div>
-                            <div class="card-body">
-                                <p class="text caption-2 secondary">{{ card_deck.description }}</p>
-                            </div>
-                        </div>
-                        <div class="card-buttons">
-                            <a href="{% url 'card-deck-detail' card_deck.slug %}" class="card-main-button button small">GO</a>
-                            {% if card_deck.user == user %}
-                                <div class="card-secondary-buttons">
-                                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">U</a>
-                                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
-                                </div>
-                            {% endif %}
-                        </div>
-                    </div>
-                {% endfor %}
-            </div>
+        <div>
+            <span class="mr-2">
+                {{ tag }}
+            </span>
+            {% if tag %}
+                <a href="{% url 'card-deck-list' %}" class="button small">Reset</a>
+            {% endif %}
         </div>
-    {% endif %}
+    </header>
     <div>
-        <h3 class="text sub-1 mb-1">Community Decks</h3>
-        <div class="grid column-3">
-            {% for card_deck in card_decks %}
-                <div class="card">
-                    <div class="card-padding">
-                        <div class="card-header">
-                            <div class="title">
-                                {{ card_deck.name }}
-                                <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+        <div class="mb-2">
+            <h3 class="text sub-1 mb-1"><span class="b-700 space-r">Private</span><span class="b-300">Decks</span></h3>
+            {% if user_card_decks %}
+                <div class="grid column-3">
+                    {% for card_deck in user_card_decks %}
+                        <div class="card">
+                            <div class="card-padding">
+                                <div class="card-header">
+                                    <div class="title">
+                                        {{ card_deck.name }}
+                                        <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+                                    </div>
+                                    <div class="dates">
+                                        <span>{{ card_deck.created_at }}</span>
+                                        <span>{{ card_deck.update_at }}</span>
+                                    </div>
+                                </div>
+                                <div class="tags-container">
+                                    {% for tag in card_deck.tags.all %}
+                                        <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                                <div class="card-body">
+                                    <p class="text caption-2 secondary">{{ card_deck.description }}</p>
+                                </div>
                             </div>
-                            <div class="dates">
-                                <span>{{ card_deck.created_at }}</span>
-                                <span>{{ card_deck.update_at }}</span>
+                            <div class="card-buttons">
+                                <a href="{% url 'card-deck-detail' card_deck.slug %}" class="card-main-button button small">GO</a>
+                                {% if card_deck.user == user %}
+                                    <div class="card-secondary-buttons">
+                                        <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">U</a>
+                                        <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
-                        <div class="tags-container">
-                            {% for tag in card_deck.tags.all %}
-                                <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
-                            {% endfor %}
-                        </div>
-                        <div class="card-body">
-                            <p class="text caption-2 secondary">{{ card_deck.description }}</p>
-                        </div>
-                    </div>
-                    <div class="card-buttons">
-                        <a href="{% url 'card-deck-detail' card_deck.slug %}" class="card-main-button button small">GO</a>
-                        {% if card_deck.user == user %}
-                            <div class="card-secondary-buttons">
-                                <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">U</a>
-                                <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
-                            </div>
-                        {% endif %}
-                    </div>
+                    {% endfor %}
                 </div>
-            {% endfor %}
+            {% else %}
+                <div>
+                    <h3 class="text body-2 secondary">No decks has this tag</h3>
+                </div>
+            {% endif %}
+            </div>
+        <div>
+            <h3 class="text sub-1 mb-1"><span class="b-700 space-r">Community</span><span class="b-300">Decks</span></h3>
+            {% if card_decks %}
+                <div class="grid column-3">
+                    {% for card_deck in card_decks %}
+                        <div class="card">
+                            <div class="card-padding">
+                                <div class="card-header">
+                                    <div class="title">
+                                        {{ card_deck.name }}
+                                        <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+                                    </div>
+                                    <div class="dates">
+                                        <span>{{ card_deck.created_at }}</span>
+                                        <span>{{ card_deck.update_at }}</span>
+                                    </div>
+                                </div>
+                                <div class="tags-container">
+                                    {% for tag in card_deck.tags.all %}
+                                        <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
+                                    {% endfor %}
+                                </div>
+                                <div class="card-body">
+                                    <p class="text caption-2 secondary">{{ card_deck.description }}</p>
+                                </div>
+                            </div>
+                            <div class="card-buttons">
+                                <a href="{% url 'card-deck-detail' card_deck.slug %}" class="card-main-button button small">GO</a>
+                                {% if card_deck.user == user %}
+                                    <div class="card-secondary-buttons">
+                                        <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">U</a>
+                                        <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div>
+                    <h3 class="text body-2 secondary">No decks has this tag</h3>
+                </div>
+            {% endif %}
         </div>
     </div>
+</div>
 {% endblock content %}
 
 {% block sidebar %}

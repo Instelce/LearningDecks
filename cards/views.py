@@ -27,10 +27,10 @@ def dashboard(request):
 
 # Card Deck Views (list, tagged, create, update, delete)
 def card_deck_list_view(request):
-    card_decks = CardDeck.objects.filter(is_visible=True)
+    card_decks = CardDeck.objects.filter(is_visible=True).order_by("-created_at")
 
     if request.user:
-        user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False)
+        user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False).order_by("-created_at")
     else:
         user_card_decks = None
 
@@ -38,15 +38,18 @@ def card_deck_list_view(request):
         'card_decks': card_decks,
         'user_card_decks': user_card_decks
     }
-    return render(request, "cards/card_deck_list.html", context)    
+    return render(request, "cards/card_deck_list.html", context)
 
 
 def card_deck_tagged(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
-    card_decks = CardDeck.objects.filter(tags=tag, is_visible=True) # Filter with tag
+    card_decks = CardDeck.objects.filter(tags=tag, is_visible=True).order_by("-created_at") # Filter with tag
+    user_card_decks = CardDeck.objects.filter(tags=tag, user=request.user, is_visible=False).order_by("-created_at") if request.user else None
+
     context = {
         'tag': tag,
-        'card_decks': card_decks
+        'card_decks': card_decks,
+        'user_card_decks': user_card_decks
     }
     return render(request, "cards/card_deck_list.html", context)
 

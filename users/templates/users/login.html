@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-    <header class="centered">
+    <header class="flex centered">
         <div class="form-card">
-            <h3 class="form-title text title-1">Login</h3>
+            <h3 class="form-title text title-1 center mb-2">Login</h3>
             <form method="POST">
                 {% csrf_token %}
                 {% for field in form %}

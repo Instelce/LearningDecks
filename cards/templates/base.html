@@ -14,7 +14,7 @@
         <title>Learn With Cards</title>
     {% endif %}
 </head>
-<body>
+<body data-scroll-container>
     <nav class="navbar">
         <ul class="navbar-section">
             <li><a href="{% url 'home' %}" class="navbar-brand">Learn With Cards</a></li>
@@ -23,9 +23,6 @@
                 <li><a href="{% url 'dashboard' %}" class="link">Dashboard</a></li>
             {% endif %}
         </ul>
-        <span>
-            {{ user.username | capfirst }}
-        </span>
         <ul class="navbar-section">
             {% if user.is_authenticated %}
                 <li><a href="{% url 'logout' %}" class="link">Logout</a></li>
@@ -44,17 +41,23 @@
         </div>
     {% endfor %}
     {% endif %}
-    
+
     <div class="main-container">
         <div class="container">
             {% block content %}{% endblock content %}
         </div>
-    
         <div class="sidebar">
             {% block sidebar %}{% endblock sidebar %}
         </div>
     </div>
 
+    <span class="trailer"></span>
+
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js" integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollToPlugin.min.js" integrity="sha512-Eenw6RBFiF4rO89LCaB5fkd4WXI4Y7GSRxrLMMWx73dZNcl+dBU3/pJtITD2gTCoEGIf/Ph3spwp0zZnF+UEJg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js" integrity="sha512-tHvUcUQYi35zApvAa5TNR3fNhBQkVtkmWKfacnpxmix4/VTGz1lGjIVyLMp7gLgAvg+aKJjnVKokXJNS5GZ+/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js"></script>
     <script src="{% static 'js/libs/locomotive-scroll.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/scroll.js' %}"></script>

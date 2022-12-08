@@ -1,19 +1,22 @@
 .notification {
     padding: 1rem 2rem;
-    position: absolute;
+    position: fixed;
     bottom: 2rem;
     left: 50%;
-    transform: translateX(-50%);
+    transform: translateX(-50%) translateY(0);
     border: 1px solid $color-gray;
-
-    animation: appear 0.3s, disappear 0.3s 3s forwards;
+    background: $color-background;
 
     &.success {
-        border: 1px solid $color-green;
+        --border-color: #34C759;
     }
     &.error {
-        border: 1px solid $color-red;
+        --border-color: #FF3B30;
     }
+
+    animation: appear 0.3s, flash 2s 0.5s, disappear 0.3s 3s forwards;
+
+    box-shadow: 0px 0px 0px 1px var(--border-color);
 }
 
 @keyframes appear {
@@ -24,11 +27,29 @@
         opacity: 1;
     }
 }
+@keyframes flash {
+    0% {
+        box-shadow: 0px 0px 0px 1px var(--border-color);
+    }
+    25% {
+        box-shadow: 0px 0px 0px 4px var(--border-color);
+    }
+    50% {
+        box-shadow: 0px 0px 0px 1px var(--border-color);
+    }
+    75% {
+        box-shadow: 0px 0px 0px 4px var(--border-color);
+    }
+    100% {
+        box-shadow: 0px 0px 0px 1px var(--border-color);
+    }
+}
 @keyframes disappear {
     0% {
         opacity: 1;
     }
     100% {
         opacity: 0;
+        transform: translateX(-50%) translateY(200%);
     }
 }
