@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div>
+        <div class="line-header">
+            <div class="flex column">
+                <h1 class="text title-1">
+                    {{ card_deck.name }}
+                    <span class="text body-2 secondary">by 
+                        <a href="#" class="link">
+                            {% if card_deck.user == user %}
+                                You
+                            {% else %}
+                                {{ card_deck.user.username }}
+                            {% endif %}
+                        </a>
+                    </span>
+                    {% if card_deck.is_visible == False %}
+                        <span class="text body-2 secondary">/ Private</span>
+                    {% endif %}
+                </h1>
+                <div class="tags-container flex mb-2">
+                    <span class="text secondary mr-1">Tags</span>
+                    <div>
+                        {% for tag in card_deck.tags.all %}
+                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <p>{{ card_deck.description }}</p>
+            </div>
+            {% if card_deck.user == user %}
+                <div>
+                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small mr-1">U</a>
+                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <span class="line"></span>
+
+        <form method="POST" class="form-inline">
+            {% csrf_token %}
+            <div class="flex centered">
+                <h2 class="text body-2 horizontal uppercase">Question</h2>
+            </div>
+            <div>
+                {% for field in question_form %}
+                    <fieldset class="form-group">
+                        <div class="field-container indication">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                        {% if field.help_text %}
+                            <div class="form-help">
+                                {{ field.help_text }}
+                            </div>
+                        {% endif %}
+                    </fieldset>
+                {% endfor %}
+            </div>
+            <button type="submit" class="button small">+</button>
+        </form>
+        <span class="line"></span>
+
+        <div class="grid column-1">
+            {% for question in questions %}
+                <div class="card">
+                    <div class="card-padding">
+                        {{ question.subject }}
+                        {{ question.content }}
+                        <form method="POST">
+                            {% csrf_token %}
+                            <input type="hidden" id="{{ responce_form.question.auto_id }}" value="{{ question }}">
+                            <fieldset class="form-group">
+                                <div class="field-container indication">
+                                    {{ responce_form.content }}
+                                    <label for="{{ responce_form.content.id_for_label }}">{{ responce_form.content.label }}</label>
+                                </div>
+                                {% if responce_form.content.errors %}
+                                    {% for error in responce_form.content.errors %}
+                                        <p class="text body-1 secondary error">{{ error }}</p>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if responce_form.content.help_text %}
+                                    <div class="form-help">
+                                        {{ responce_form.content.help_text }}
+                                    </div>
+                                {% endif %}
+                            </fieldset>
+                            {{ responce_form.rate }}
+                            <button class="button" type="submit">Post</button>
+                        </form>
+                        {% for responce in responces %}
+                            <span>{{ responce.content }}</span>
+                        {% endfor %}
+                        {% if question.deck.user == user %}
+                            {% comment %} <a href="{% url 'question-update' question.deck.slug question.id %}" class="link">Update</a> {% endcomment %}
+                            {% comment %} <a href="{% url 'question-delete' question.deck.slug question.id %}" class="link">Delete</a> {% endcomment %}
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}

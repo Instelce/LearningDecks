@@ -31,7 +31,7 @@ const animateTrailer = (e, interacting) => {
     }
 
     trailer.animate(keyframes, {
-        duration: 0,
+        duration: 100,
         fill: "forwards"
     })
 }
@@ -53,9 +53,12 @@ interactableElements.forEach(element => {
 const aLinks = document.querySelectorAll('a')
 const pageTransition = function(href) {
     document.querySelector('body').style.opacity = 0
-    setTimeout(function() { 
-        window.location.href = href
-    }, 500)
+
+    if (href != '#') {
+        setTimeout(function() { 
+            window.location.href = href
+        }, 500)
+    }
 }
 
 aLinks.forEach(a => {

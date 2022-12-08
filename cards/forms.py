@@ -1,3 +1,4 @@
+from dataclasses import fields
 from django import forms
 
 from .models import *
@@ -22,4 +23,23 @@ class CardForm(forms.ModelForm):
         fields = [
             'term',
             'definition'
+        ]
+
+
+class QuestionForm(forms.ModelForm):
+    class Meta:
+        model = Question
+        fields = [
+            'subject',
+            'content'
+        ]
+
+
+class ResponceForm(forms.ModelForm):
+    class Meta:
+        model = Responce
+        fields = [
+            'question',
+            'content',
+            'rate'
         ]

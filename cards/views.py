@@ -164,3 +164,40 @@ def card_delete_view(request, deck_slug, card_id):
             return redirect('card-deck-detail', slug=deck_slug)
 
         return render(request, "cards/card_delete.html", {})
+
+
+# Questions and responces views
+@login_required
+def card_deck_question_list_view(request, deck_slug):
+    card_deck = get_object_or_404(CardDeck, slug=deck_slug)
+    questions = Question.objects.filter(deck=card_deck).order_by('-created_at')
+    responces = Responce.objects.filter(deck=card_deck)
+
+    if request.POST:
+        question_form = QuestionForm(request.POST)
+        responce_form = ResponceForm(request.POST)
+        if question_form.is_valid():
+            new_question = question_form.save(commit=False)
+            new_question.user = request.user
+            new_question.deck = card_deck
+            new_question.save()
+            return redirect('card-deck-question-list', deck_slug=deck_slug)
+        if responce_form.is_valid():
+            new_responce = responce_form.save(commit=False)
+            new_responce.user = request.user
+            new_responce.deck = card_deck
+            new_responce.save()
+            return redirect('card-deck-question-list', deck_slug=deck_slug)
+    else:
+        question_form = QuestionForm()
+        responce_form = ResponceForm()
+
+    context = {
+        'card_deck': card_deck,
+        'questions': questions,
+        'question_form': question_form,
+        'responces': responces,
+        'responce_form': responce_form,
+    }
+
+    return render(request, "cards/card_deck_question_list.html", context)

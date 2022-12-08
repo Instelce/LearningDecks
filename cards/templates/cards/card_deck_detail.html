@@ -30,7 +30,8 @@
                 <p>{{ card_deck.description }}</p>
             </div>
             {% if card_deck.user == user %}
-                <div>
+                <div> 
+                    <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="button small mr-1">Questions</a>
                     <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small mr-1">U</a>
                     <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
                 </div>
