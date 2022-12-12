@@ -39,7 +39,6 @@ class ResponceForm(forms.ModelForm):
     class Meta:
         model = Responce
         fields = [
-            'question',
             'content',
             'rate'
         ]

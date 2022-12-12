@@ -59,7 +59,7 @@
                     </fieldset>
                 {% endfor %}
             </div>
-            <button type="submit" class="button small">+</button>
+            <button type="submit" name="post-question" class="button small">+</button>
         </form>
         <span class="line"></span>
 
@@ -70,26 +70,16 @@
                         {{ question.subject }}
                         {{ question.content }}
                         <form method="POST">
+                            {{ responce_form.managment_form }}
                             {% csrf_token %}
-                            <input type="hidden" id="{{ responce_form.question.auto_id }}" value="{{ question }}">
+                            <input type="hidden" name="responce-question" id="responce-question" value="{{ question.id }}">
                             <fieldset class="form-group">
                                 <div class="field-container indication">
                                     {{ responce_form.content }}
                                     <label for="{{ responce_form.content.id_for_label }}">{{ responce_form.content.label }}</label>
                                 </div>
-                                {% if responce_form.content.errors %}
-                                    {% for error in responce_form.content.errors %}
-                                        <p class="text body-1 secondary error">{{ error }}</p>
-                                    {% endfor %}
-                                {% endif %}
-                                {% if responce_form.content.help_text %}
-                                    <div class="form-help">
-                                        {{ responce_form.content.help_text }}
-                                    </div>
-                                {% endif %}
                             </fieldset>
-                            {{ responce_form.rate }}
-                            <button class="button" type="submit">Post</button>
+                            <button class="button" name="post-responce" type="submit">Post</button>
                         </form>
                         {% for responce in responces %}
                             <span>{{ responce.content }}</span>

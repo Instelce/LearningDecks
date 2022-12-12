@@ -40,6 +40,9 @@ class Question(models.Model):
     subject = models.CharField(max_length=300)
     content = models.TextField(max_length=600)
 
+    def __str__(self) -> str:
+        return f"Question of {self.user} about {self.subject}"
+
 
 class Responce(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -48,3 +51,6 @@ class Responce(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     content = models.TextField(max_length=600)
     rate = models.IntegerField(default=0)
+
+    def __str__(self) -> str:
+        return f"Responce of {self.question.subject} of {self.user}"
