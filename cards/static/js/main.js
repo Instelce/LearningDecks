@@ -50,26 +50,38 @@ interactableElements.forEach(element => {
 });
 
 // Page transition
-const aLinks = document.querySelectorAll('a')
-const pageTransition = function(href) {
-    document.querySelector('body').style.opacity = 0
+// const aLinks = document.querySelectorAll('a')
+// const pageTransition = function(href) {
+//     document.querySelector('body').style.opacity = 0
 
-    if (href != '#') {
-        setTimeout(function() { 
-            window.location.href = href
-        }, 500)
-    }
-}
+//     if (href != '#') {
+//         setTimeout(function() { 
+//             window.location.href = href
+//         }, 500)
+//     }
+// }
 
-aLinks.forEach(a => {
-    href = a.href
-    if (href != '#') {
-        a.addEventListener('click', e => {
-            window.transitionToPage = pageTransition(href)
-        })
-    } 
-});
+// aLinks.forEach(a => {
+//     href = a.href
+//     if (href != '#') {
+//         a.addEventListener('click', e => {
+//             window.transitionToPage = pageTransition(href)
+//         })
+//     } 
+// });
 
 document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('body').style.opacity = 1
 })
+
+// Reply form
+const replyButtons = document.querySelectorAll('.reply-button')
+const replyFormContainer = document.querySelectorAll('.reply-form-container')
+console.log(replyButtons);
+replyButtons.forEach(button => {
+    console.log(button.classList);
+    button.addEventListener('click', (e) => {
+        e.preventDefault()
+        
+    })
+});

@@ -69,8 +69,12 @@
                     <div class="card-padding">
                         {{ question.subject }}
                         {{ question.content }}
+                        <input type="hidden" value="{{ question.id }}">
+                        {% if user.is_authenticated %}
+                            <a href="#" class="reply-button q-id-{{ question.id }} link">Reply</a>
+                        {% endif %}
+                        <div class="reply-form-container q-id-{{ question.id }}"></div>
                         <form method="POST">
-                            {{ responce_form.managment_form }}
                             {% csrf_token %}
                             <input type="hidden" name="responce-question" id="responce-question" value="{{ question.id }}">
                             <fieldset class="form-group">
