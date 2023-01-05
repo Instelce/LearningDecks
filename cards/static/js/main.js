@@ -79,7 +79,9 @@ const replyButtons = document.querySelectorAll('.reply-button')
 const replyFormContainer = document.querySelectorAll('.reply-form-container')
 console.log(replyButtons);
 replyButtons.forEach(button => {
-    console.log(button.classList);
+    let questionId = button.classList[1]
+    let replyFromContainer = document.
+    console.log(button.classList[1]);
     button.addEventListener('click', (e) => {
         e.preventDefault()
         

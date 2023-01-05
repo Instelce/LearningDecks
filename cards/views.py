@@ -29,7 +29,7 @@ def dashboard(request):
 def card_deck_list_view(request):
     card_decks = CardDeck.objects.filter(is_visible=True).order_by("-created_at")
 
-    if request.user:
+    if request.user.is_authenticated:
         user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False).order_by("-created_at")
     else:
         user_card_decks = None
