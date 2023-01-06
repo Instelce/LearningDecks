@@ -9,6 +9,16 @@
     }
 }
 
+
+@mixin colors($className, $styleName) {
+    $i: 0;
+    @each $name, $color in $colors {
+        #{$className + $name} {
+            #{$styleName}: #{$color};
+        }
+    }
+}
+
 // Margins
 @include loop('.mt-', 'margin-top', 20, 1, 'rem');
 @include loop('.mr-', 'margin-right', 20, 1, 'rem');
@@ -23,3 +33,7 @@
 @include loop('.px-', 'padding', 20, 1, 'rem');
 // Bold
 @include loop('.b-', 'font-weight', 900, 100, '');
+
+@include colors('.text-', 'color');
+@include colors('.bg-', 'color');
+@include colors('.border-', 'color');

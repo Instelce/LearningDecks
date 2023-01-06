@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load markdown_extras %}
 
 {% block content %}
     <div>
@@ -23,18 +24,38 @@
                     <span class="text secondary mr-1">Tags</span>
                     <div>
                         {% for tag in card_deck.tags.all %}
-                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
+                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link space-r">{{ tag }}</a>
                         {% endfor %}
                     </div>
                 </div>
                 <p>{{ card_deck.description }}</p>
             </div>
-            <div> 
-                <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="button small mr-1">Questions</a>
+            <div class="px-1">
+                <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-message"></i></a>
                 {% if card_deck.user == user %}
-                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small mr-1">U</a>
-                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
+                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-pen"></i></a>
+                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="link no-underline"><i class="fa-solid fa-trash"></i></a>
                 {% endif %}
+            </div>
+        </div>
+
+        <div class="grid">
+            <a href="#" class="button">Start Learning</a>
+        </div>
+
+        <span class="line"></span>
+
+        <div>
+            <div class="dropdown">
+                <div class="toggle">
+                    <h3 class="text sub-1">Lesson</h3>
+                    <a href="#" class="indication">View</a>
+                </div>
+                <div class="content markdown">
+                    <div class="wrapper">
+                        {{ card_deck.lesson | markdown | safe }}
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -61,17 +82,21 @@
                         </fieldset>
                     {% endfor %}
                 </div>
-                <button type="submit" class="button small">+</button>
+                <button type="submit" class="button small"><i class="fa-solid fa-plus"></i></button>
             </form>
             <span class="line"></span>
         {% endif %}
 
-        <div class="grid column-3">
+        <div class="grid column-2">
             {% for card in cards %}
                 <div class="card">
                     <div class="card-padding">
-                        {{ card.term }}
-                        {{ card.definition }}
+                        <div class="title">
+                            {{ card.term }}
+                        </div>
+                        <p class="text secondary">
+                            {{ card.definition }}
+                        </p>
                         {% if card.deck.user == user %}
                             <a href="{% url 'card-update' card.deck.slug card.id %}" class="link">Update</a>
                             <a href="{% url 'card-delete' card.deck.slug card.id %}" class="link">Delete</a>

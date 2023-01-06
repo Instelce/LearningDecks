@@ -76,3 +76,7 @@
         border-left: 1px solid $color-gray;
     }
 }
+
+.card-own {
+    box-shadow: 0px 0px 0px 2px inset $color-gray;
+}

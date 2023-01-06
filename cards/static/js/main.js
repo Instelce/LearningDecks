@@ -84,6 +84,34 @@ replyButtons.forEach(button => {
     console.log(button.classList[1]);
     button.addEventListener('click', (e) => {
         e.preventDefault()
-        
+    })
+});
+
+// Dropdown
+const dropdowns = document.querySelectorAll('.dropdown')
+
+dropdowns.forEach(dropdown => {
+    const toggle = dropdown.querySelector('.toggle')
+    const indication = dropdown.querySelector('.indication')
+    const content = dropdown.querySelector('.content')
+
+    toggle.classList.add('interactable')
+
+    toggle.addEventListener('click', (e) => {
+        e.preventDefault()
+        if (indication.innerHTML == 'View') {
+            indication.innerHTML = 'Hide'
+        } else {
+            indication.innerHTML = 'View'
+        }
+
+        if (content.clientHeight) {
+            content.style.height = 0;
+        } else {
+            var wrapper = content.querySelector('.wrapper');
+            content.style.height = wrapper.clientHeight + "px";
+        }
+
+        content.classList.toggle('visible');
     })
 });

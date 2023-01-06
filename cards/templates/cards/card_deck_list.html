@@ -16,7 +16,7 @@
             {% endif %}
         </div>
     </header>
-    <div>
+    <div class="pb-2">
         {% if user.is_authenticated %} 
             <div class="mb-2">
                 <h3 class="text sub-1 mb-1"><span class="b-700 space-r">Private</span><span class="b-300">Decks</span></h3>
@@ -48,8 +48,8 @@
                                     <a href="{% url 'card-deck-detail' card_deck.slug %}" class="card-main-button button small">GO</a>
                                     {% if card_deck.user == user %}
                                         <div class="card-secondary-buttons">
-                                            <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">U</a>
-                                            <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
+                                            <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small"><i class="fa-solid fa-pen"></i></a>
+                                            <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small"><i class="fa-solid fa-trash"></i></a>
                                         </div>
                                     {% endif %}
                                 </div>
@@ -68,12 +68,16 @@
             {% if card_decks %}
                 <div class="grid column-3">
                     {% for card_deck in card_decks %}
-                        <div class="card">
+                        <div {% if card_deck.user == user %}class="card card-own"{% else %}class="card"{% endif %} >
                             <div class="card-padding">
                                 <div class="card-header">
                                     <div class="title">
                                         {{ card_deck.name }}
-                                        <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+                                        {% if card_deck.user == user %}
+                                            <span>by <a href="#" class="link">You</a></span>
+                                        {% else %}
+                                            <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
+                                        {% endif %}
                                     </div>
                                     <div class="dates">
                                         <span>{{ card_deck.created_at }}</span>
@@ -93,9 +97,9 @@
                                 <a href="{% url 'card-deck-detail' card_deck.slug %}" class="card-main-button button small">GO</a>
                                 {% if card_deck.user == user %}
                                     <div class="card-secondary-buttons">
-                                        <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small">U</a>
-                                        <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
-                                    </div>
+                                        <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small"><i class="fa-solid fa-pen"></i></a>
+                                        <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small"><i class="fa-solid fa-trash"></i></a>
+                                </div>
                                 {% endif %}
                             </div>
                         </div>

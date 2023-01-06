@@ -29,12 +29,12 @@
                 </div>
                 <p>{{ card_deck.description }}</p>
             </div>
-            {% if card_deck.user == user %}
-                <div>
-                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="button small mr-1">U</a>
-                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="button small">D</a>
-                </div>
-            {% endif %}
+            <div class="px-1">
+                {% if card_deck.user == user %}
+                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-pen"></i></a>
+                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="link no-underline"><i class="fa-solid fa-trash"></i></a>
+                {% endif %}
+            </div>
         </div>
 
         <span class="line"></span>
@@ -42,7 +42,7 @@
         <form method="POST" class="form-inline">
             {% csrf_token %}
             <div class="flex centered">
-                <h2 class="text body-2 horizontal uppercase">Question</h2>
+                <h2 class="text body-2 horizontal uppercase"><i class="fa-solid fa-message"></i></h2>
             </div>
             <div>
                 {% for field in question_form %}

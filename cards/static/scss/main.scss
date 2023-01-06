@@ -16,7 +16,8 @@
     './components/links',
     './components/card',
     './components/trailer',
-    './components/notification';
+    './components/notification',
+    './components/dropdown';
 
 @import
     './modules/base',
@@ -24,6 +25,7 @@
     './modules/helpers',
     './modules/mediaqueries',
     './modules/mixins',
+    './modules/markdown',
     './modules/typography';
 
 @import

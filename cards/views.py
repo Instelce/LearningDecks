@@ -56,13 +56,13 @@ def card_deck_tagged(request, slug):
 
 def card_deck_detail_view(request, slug):
     card_deck = get_object_or_404(CardDeck, slug=slug)
-    
+
     # Get cards of card deck
     try:
         cards = Card.objects.filter(deck=card_deck)
     except Card.DoesNotExist:
         cards = None
-    
+
     # Create card form
     if request.POST and card_deck.user == request.user:
         card_form = CardForm(request.POST)
@@ -128,8 +128,8 @@ def card_deck_delete_view(request, slug):
         if request.POST:
             card_deck.delete()
             messages.success(request, f"Deck has been deleted")
-            return redirect('card-deck-list')
-        return render(request, "cards/card_deck_delete.html", {})
+            return redirect(request.META.get('HTTP_REFERER'))
+        return render(request, "cards/card_deck_delete.html", {'card_deck': card_deck})
 
 
 # Card Views (update, delete)

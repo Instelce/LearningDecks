@@ -4,6 +4,10 @@
 
     transition: color 0.3s;
 
+    &.no-underline::after {
+        content: none;
+    }
+
     &::after {
         content: "";
         width: 100%;
