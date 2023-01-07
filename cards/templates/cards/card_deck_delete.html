@@ -7,7 +7,7 @@
             <h1 class="text title-1 center mb-1">Delete <span class="text-accent">{{ card_deck.name }}</span> deck ?</h1>
             <div class="grid column-2">
                 <button type="submit" class="button">Yes</button>
-                <a href="{% url 'card-deck-list' %}" class="button">No</a>
+                <a href="{{ request.GET.next }}" class="button">No</a>
             </div>
         </form>
     </div>

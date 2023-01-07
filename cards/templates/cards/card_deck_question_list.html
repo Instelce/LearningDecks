@@ -3,37 +3,40 @@
 {% block content %}
     <div>
         <div class="line-header">
-            <div class="flex column">
-                <h1 class="text title-1">
-                    {{ card_deck.name }}
-                    <span class="text body-2 secondary">by 
-                        <a href="#" class="link">
-                            {% if card_deck.user == user %}
-                                You
-                            {% else %}
-                                {{ card_deck.user.username }}
-                            {% endif %}
-                        </a>
-                    </span>
-                    {% if card_deck.is_visible == False %}
-                        <span class="text body-2 secondary">/ Private</span>
-                    {% endif %}
-                </h1>
+            <div class="flex column fill-w">
+                <div class="flex space-between">
+                    <h1 class="text title-1">
+                        {{ card_deck.name }}
+                        <span class="text body-2 secondary">by 
+                            <a href="#" class="link">
+                                {% if card_deck.user == user %}
+                                    You
+                                {% else %}
+                                    {{ card_deck.user.username }}
+                                {% endif %}
+                            </a>
+                        </span>
+                        {% if card_deck.is_visible == False %}
+                            <span class="text body-2 secondary">/ Private</span>
+                        {% endif %}
+                    </h1>
+                    <div class="pt-1">
+                        <a href="{% url 'card-deck-detail' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-angle-left"></i></a>
+                        {% if card_deck.user == user %}
+                            <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-pen"></i></a>
+                            <a href="{% url 'card-deck-delete' card_deck.slug %}" class="link no-underline"><i class="fa-solid fa-trash"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
                 <div class="tags-container flex mb-2">
                     <span class="text secondary mr-1">Tags</span>
                     <div>
                         {% for tag in card_deck.tags.all %}
-                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
+                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link space-r">{{ tag }}</a>
                         {% endfor %}
                     </div>
                 </div>
                 <p>{{ card_deck.description }}</p>
-            </div>
-            <div class="px-1">
-                {% if card_deck.user == user %}
-                    <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-pen"></i></a>
-                    <a href="{% url 'card-deck-delete' card_deck.slug %}" class="link no-underline"><i class="fa-solid fa-trash"></i></a>
-                {% endif %}
             </div>
         </div>
 
@@ -59,16 +62,16 @@
                     </fieldset>
                 {% endfor %}
             </div>
-            <button type="submit" name="post-question" class="button small">+</button>
+            <button type="submit" name="post-question" class="button small"><i class="fa-solid fa-plus"></i></button>
         </form>
         <span class="line"></span>
 
         <div class="grid column-1">
             {% for question in questions %}
-                <div class="card">
-                    <div class="card-padding">
-                        {{ question.subject }}
-                        {{ question.content }}
+                <div class="">
+                    <div class="">
+                        <h3 class="text sub-1">{{ question.subject }}</h3>
+                        <p>{{ question.content }}</p>
                         <input type="hidden" value="{{ question.id }}">
                         {% if user.is_authenticated %}
                             <a href="#" class="reply-button q-id-{{ question.id }} link">Reply</a>

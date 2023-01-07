@@ -4,10 +4,11 @@
     <div class="fill flex centered">
         <form method="POST">
             {% csrf_token %}
-            <h1 class="text title-1 center mb-1">Delete card ?</h1>
+            <input type="hidden" name="next" value="{{ request.GET.next }}">
+            <h1 class="text title-1 center mb-1">Delete <span class="text-accent">{{ card.term }}</span> card ?</h1>
             <div class="grid column-2">
                 <button type="submit" class="button">Yes</button>
-                <a href="{% url 'card-deck-list' %}" class="button">No</a>
+                <a href="{% url 'card-deck-detail' card.deck.slug %}" class="button">No</a>
             </div>
         </form>
     </div>

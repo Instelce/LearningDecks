@@ -92,7 +92,7 @@ def card_deck_create_view(request):
             new_card_deck.slug = slugify(new_card_deck.name)
             new_card_deck.save()
             form.save_m2m()
-            messages.success(request, f"Deck has been created")
+            messages.success(request, f"{new_card_deck.name.capitalize()} deck has been created")
             return redirect('card-deck-list')
     else:
         form = CardDeckForm()
@@ -110,9 +110,9 @@ def card_deck_update_view(request, slug):
 
         form = CardDeckForm(request.POST or None, instance=card_deck)
         if form.is_valid():
+            messages.success(request, f"{card_deck.name.capitalize()} deck has been updated")
             form.save()
-            messages.success(request, f"Deck has been updated")
-            return redirect('card-deck-list')
+            return redirect('card-deck-detail', slug=card_deck.slug)
 
         return render(request, "cards/card_deck_update.html", {"form": form})
 
@@ -126,9 +126,9 @@ def card_deck_delete_view(request, slug):
     else:
         card_deck = get_object_or_404(CardDeck, slug=slug)
         if request.POST:
+            messages.success(request, f"{card_deck.name.capitalize()} deck has been deleted")
             card_deck.delete()
-            messages.success(request, f"Deck has been deleted")
-            return redirect(request.META.get('HTTP_REFERER'))
+            return redirect('card-deck-list')
         return render(request, "cards/card_deck_delete.html", {'card_deck': card_deck})
 
 
@@ -143,8 +143,8 @@ def card_update_view(request, deck_slug, card_id):
         card = get_object_or_404(Card, id=card_id)
         form = CardForm(request.POST or None, instance=card)
         if form.is_valid():
+            messages.success(request, f"{card.term.capitalize()} card has been updated")
             form.save()
-            messages.success(request, f"Card has been updated")
             return redirect('card-deck-detail', slug=deck_slug)
 
         return render(request, "cards/card_update.html", {"form": form})
@@ -159,11 +159,10 @@ def card_delete_view(request, deck_slug, card_id):
     else:
         card = get_object_or_404(Card, id=card_id)
         if request.POST:
+            messages.success(request, f"{card.term.capitalize()} card has been deleted")
             card.delete()
-            messages.success(request, f"Card has been deleted")
             return redirect('card-deck-detail', slug=deck_slug)
-
-        return render(request, "cards/card_delete.html", {})
+        return render(request, "cards/card_delete.html", {'card': card})
 
 
 # Questions and responces views
@@ -185,7 +184,7 @@ def card_deck_question_list_view(request, deck_slug):
     else:
         question_form = QuestionForm()
 
-    # Responce  
+    # Responce
     if 'post-responce' in request.POST:
         responce_form = ResponceForm(request.POST)
         if responce_form.is_valid():

@@ -6,6 +6,7 @@
     transform: translateX(-50%) translateY(0);
     border: 1px solid $color-gray;
     background: $color-background;
+    z-index: 1000;
 
     &.success {
         --border-color: #34C759;
