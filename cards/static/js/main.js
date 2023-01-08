@@ -15,7 +15,7 @@ let mainContainer = document.querySelector('.main-container')
 
 sidebar.style = `top: ${navbar.getBoundingClientRect().height}px;`;
 sidebar.style = `padding-bottom: calc(${navbar.getBoundingClientRect().height}px + 2rem);`;
-mainContainer.style = `padding-bottom: calc(${navbar.getBoundingClientRect().height}px + 2rem);`;
+// mainContainer.style = `padding-bottom: calc(${navbar.getBoundingClientRect().height}px + 2rem);`;
 console.log(navbar.getBoundingClientRect().height + 'px');
 
 // Trailer
@@ -113,5 +113,15 @@ dropdowns.forEach(dropdown => {
         }
 
         content.classList.toggle('visible');
+    })
+});
+
+// Flip card
+const flipCards = document.querySelectorAll('.flip-card')
+
+flipCards.forEach(card => {
+    const inner = card.querySelector('.inner')
+    card.addEventListener('click', (e) => {
+        inner.classList.toggle('rotate');
     })
 });

@@ -54,6 +54,22 @@ def card_deck_tagged(request, slug):
     return render(request, "cards/card_deck_list.html", context)
 
 
+def card_deck_learning_view(request, slug):
+    card_deck = get_object_or_404(CardDeck, slug=slug)
+
+    # Get cards of card deck
+    try:
+        cards = Card.objects.filter(deck=card_deck)
+    except Card.DoesNotExist:
+        cards = None
+
+    context = {
+        "card_deck": card_deck,
+        "cards": cards
+    }
+    return render(request, "cards/card_deck_learning.html", context)
+
+
 def card_deck_detail_view(request, slug):
     card_deck = get_object_or_404(CardDeck, slug=slug)
 

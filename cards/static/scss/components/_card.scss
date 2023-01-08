@@ -1,82 +1,125 @@
 .card {
-    height: auto;
-    overflow: hidden;
-    display: inline-block;
-    // padding: 1rem 2rem;
-    border: 1px solid $color-gray;
-    transition: height 0.3s;
+  height: auto;
+  overflow: hidden;
+  display: inline-block;
+  // padding: 1rem 2rem;
+  border: 1px solid $color-gray;
+  transition: height 0.3s;
 
-    .card-padding { padding: 1rem 2rem; }
+  .card-padding {
+    padding: 1rem 2rem;
+  }
 
-    .card-header {
-        display: flex;
-        justify-content: space-between;
+  .card-header {
+    display: flex;
+    justify-content: space-between;
 
-        .title {
-            font-size: 20px;
-            font-weight: 500;
+    .title {
+      font-size: 20px;
+      font-weight: 500;
 
-            span {
-                font-size: 14px;
-                color: $color-secondary-text;
-            }
-        }
-
-        .dates {
-            display: flex;
-            align-items: center;
-            font-size: 10px;
-            font-weight: 300;
-            color: $color-secondary-text;
-        }
+      span {
+        font-size: 14px;
+        color: $color-secondary-text;
+      }
     }
 
-    .tags-container {
-        display: flex;
-        margin-bottom: .5rem;
+    .dates {
+      display: flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 300;
+      color: $color-secondary-text;
     }
-    .tag {
-        margin-right: .5rem;
-        font-size: 12px;
-    }
-    .card-body {
-    }
+  }
 
-    .card-buttons {
-        display: flex;
-    }
+  .tags-container {
+    display: flex;
+    margin-bottom: 0.5rem;
+  }
+  .tag {
+    margin-right: 0.5rem;
+    font-size: 12px;
+  }
+  .card-body {
+  }
 
-    .card-main-button {
-        width: 100%;
-        border: none;
-        border-top: 1px solid $color-gray;
-    }
+  .card-buttons {
+    display: flex;
+  }
 
-    .card-secondary-buttons {
-        width: 0px;
-        display: grid;
-        grid-template-columns: auto auto;
-        transition: transform 0.3s, width 0.3s ease;
+  .card-main-button {
+    width: 100%;
+    border: none;
+    border-top: 1px solid $color-gray;
+  }
 
-        button,
-        a {
-            border: none;
-            border-top: 1px solid $color-gray;
-            border-right: 1px solid $color-gray;
-        }
-        a:last-child {
-            border-right: none;
-        }
-    }
+  .card-secondary-buttons {
+    width: 0px;
+    display: grid;
+    grid-template-columns: auto auto;
+    transition: transform 0.3s, width 0.3s ease;
 
-    &:hover .card-secondary-buttons {
-        width: 100%;
+    button,
+    a {
+      border: none;
+      border-top: 1px solid $color-gray;
+      border-right: 1px solid $color-gray;
     }
-    &:hover .card-secondary-buttons a:first-child {
-        border-left: 1px solid $color-gray;
+    a:last-child {
+      border-right: none;
     }
+  }
+
+  &:hover .card-secondary-buttons {
+    width: 100%;
+  }
+  &:hover .card-secondary-buttons a:first-child {
+    border-left: 1px solid $color-gray;
+  }
 }
 
 .card-own {
-    box-shadow: 0px 0px 0px 2px inset $color-gray;
+  box-shadow: 0px 0px 0px 2px inset $color-gray;
 }
+
+.flip-card {
+  .inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .rotate .back {
+    opacity: 1;
+  }
+
+  .rotate .front {
+    opacity: 0;
+  }
+
+  .front,
+  .back {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    width: 100%;
+    height: 100%;
+
+    position: absolute;
+    overflow-wrap: break-word;
+    transition: opacity 0.3s;
+  }
+
+  .front {
+  }
+
+  .back {
+    opacity: 0;
+  }
+}
+
+
+

@@ -29,12 +29,12 @@ body {
 }
 
 .main-container {
-    height: 100vh;
+    min-height: 100vh;
     box-sizing: border-box;
     position: relative;
     display: grid;
     grid-template-columns: 1fr auto;
-    padding-bottom: 4rem;
+    // padding-bottom: 4rem;
     padding-right: 4rem;
 }
 

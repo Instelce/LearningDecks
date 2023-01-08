@@ -14,6 +14,8 @@
     {% else %}
         <title>Learn With Cards</title>
     {% endif %}
+
+    {% block head %}{% endblock head %}
 </head>
 <body data-scroll-container>
     <nav class="navbar">
@@ -69,5 +71,7 @@
     <script src="{% static 'js/libs/locomotive-scroll.js' %}"></script>
     <script src="{% static 'js/main.js' %}"></script>
     <script src="{% static 'js/scroll.js' %}"></script>
+
+    {% block script %}{% endblock script %}
 </body>
 </html>

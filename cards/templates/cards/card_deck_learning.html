@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load markdown_extras %}
+
+{% block head %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+{% endblock head %}
+
+{% block content %}
+    <div>
+        <div class="swiper card-swiper">
+            <div class="swiper-wrapper">
+                {% for card in cards %}
+                    <div class="swiper-slide flip-card interactable">
+                        <div class="inner">
+                            <div class="front flex column">
+                                <span class="text body-1 secondary">Term</span>
+                                <span class="text sub-1">{{ card.term }}</span>
+                            </div>
+                            <div class="back flex column">
+                                <span class="text body-1 secondary">Definition</span>
+                                <span class="text sub-1">{{ card.definition }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block sidebar %}
+    <h2 class="sidebar-title">{{ card_deck.name }}</h2>
+{% endblock sidebar %}
+
+{% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper(".card-swiper", {
+            effect: "slide",
+            calculateHeight: true,
+            loop: true,
+            keyboard: {
+                enabled: true,
+            },
+        })
+
+        const container = document.querySelector('.container');
+        const cardSwiper = document.querySelector('.card-swiper');
+        const swiperSlides = document.querySelectorAll('.swiper-slide');
+        {% comment %} cardSwiper.style.width = container.getBoundingClientRect().width + "px"; {% endcomment %}
+        {% comment %} cardSwiper.style.height = container.getBoundingClientRect().height + "px"; {% endcomment %}
+        {% comment %} swiperSlides.forEach(slide => {
+            slide.style.width = container.getBoundingClientRect().width + "px";
+            slide.style.height = container.getBoundingClientRect().height + "px";
+        }) {% endcomment %}
+    </script>
+{% endblock script %}
