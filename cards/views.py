@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from taggit.models import Tag
+from django.db.models import Q
 
 from .models import *
 from .forms import *
@@ -27,7 +28,12 @@ def dashboard(request):
 
 # Card Deck Views (list, tagged, create, update, delete)
 def card_deck_list_view(request):
-    card_decks = CardDeck.objects.filter(is_visible=True).order_by("-created_at")
+    query = request.GET.get('search')
+    print(query, len(str(query)))
+    if query is not None and len(str(query)) != 0:
+        card_decks = CardDeck.objects.filter(is_visible=True).search(query=query).order_by("-created_at")
+    else:
+        card_decks = CardDeck.objects.filter(is_visible=True).order_by("-created_at")
 
     if request.user.is_authenticated:
         user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False).order_by("-created_at")
@@ -36,7 +42,7 @@ def card_deck_list_view(request):
 
     context = {
         'card_decks': card_decks,
-        'user_card_decks': user_card_decks
+        'user_card_decks': user_card_decks,
     }
     return render(request, "cards/card_deck_list.html", context)
 

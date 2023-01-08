@@ -2,6 +2,23 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
+from django.db.models import Q
+
+
+class CardDeckQuerySet(models.QuerySet):
+    def search(self, query=None):
+        if query is None or query == "":
+            return self.none()
+        lookups = Q(name__icontains=query) | Q(description__icontains=query) | Q(lesson__icontains=query)
+        return self.filter(lookups)
+
+
+class CardDeckManager(models.Manager):
+    def get_queryset(self):
+        return CardDeckQuerySet(self.model, using=self._db)
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
 
 
 class CardDeck(models.Model):
@@ -18,6 +35,8 @@ class CardDeck(models.Model):
     created_at = models.DateField(auto_now_add=True)
     updated_at = models.DateField(auto_now=True)
     unlock_password = models.IntegerField(default=0, blank=True)
+
+    objects = CardDeckManager()
 
     def __str__(self):
         return f"{self.name} Deck - {self.user.username}"
