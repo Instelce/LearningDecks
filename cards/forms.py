@@ -17,6 +17,12 @@ class CardDeckForm(forms.ModelForm):
         ]
 
 
+class CardDeckFavoriteForm(forms.ModelForm):
+    class Meta:
+        model = CardDeckFavorite
+        fields = []
+
+
 class CardForm(forms.ModelForm):
     class Meta:
         model = Card

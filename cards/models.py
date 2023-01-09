@@ -1,4 +1,5 @@
 import datetime
+from statistics import mode
 from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
@@ -40,6 +41,14 @@ class CardDeck(models.Model):
 
     def __str__(self):
         return f"{self.name} Deck - {self.user.username}"
+
+
+class CardDeckFavorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    deck = models.ForeignKey(CardDeck, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.user.username} like {self.deck.name} deck"
 
 
 class Card(models.Model):

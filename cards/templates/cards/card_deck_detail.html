@@ -22,6 +22,19 @@
                         {% endif %}
                     </h1>
                     <div class="pt-1">
+                        {% if user.is_authenticated %}
+                            {% if card_deck_favorite %}
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" name="remove-favorite" class="link no-underline mr-2"><i class="fa-solid fa-heart"></i></button>
+                                </form>
+                            {% else %}
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" name="add-favorite" class="link no-underline mr-2"><i class="fa-regular fa-heart"></i></button>
+                                </form>
+                            {% endif %}
+                        {% endif %}
                         <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-message"></i></a>
                         {% if card_deck.user == user %}
                             <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-pen"></i></a>
@@ -84,7 +97,7 @@
                         </fieldset>
                     {% endfor %}
                 </div>
-                <button type="submit" class="button small"><i class="fa-solid fa-plus"></i></button>
+                <button type="submit" name="create-card" class="button small"><i class="fa-solid fa-plus"></i></button>
             </form>
             <span class="line"></span>
         {% endif %}

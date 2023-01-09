@@ -28,6 +28,7 @@ def dashboard(request):
 
 # Card Deck Views (list, tagged, create, update, delete)
 def card_deck_list_view(request):
+    # All visible card decks
     query = request.GET.get('search')
     print(query, len(str(query)))
     if query is not None and len(str(query)) != 0:
@@ -36,13 +37,19 @@ def card_deck_list_view(request):
         card_decks = CardDeck.objects.filter(is_visible=True).order_by("-created_at")
 
     if request.user.is_authenticated:
+        # User card decks
         user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False).order_by("-created_at")
+
+        # Favorite
+        card_deck_favorites = CardDeckFavorite.objects.filter(user=request.user)
     else:
         user_card_decks = None
+        card_deck_favorites = None
 
     context = {
         'card_decks': card_decks,
         'user_card_decks': user_card_decks,
+        'card_deck_favorites': card_deck_favorites,
     }
     return render(request, "cards/card_deck_list.html", context)
 
@@ -85,8 +92,8 @@ def card_deck_detail_view(request, slug):
     except Card.DoesNotExist:
         cards = None
 
-    # Create card form
-    if request.POST and card_deck.user == request.user:
+    # Create card form if user owned the deck
+    if 'create-card' in request.POST and card_deck.user == request.user:
         card_form = CardForm(request.POST)
         if card_form.is_valid():
             new_card = card_form.save(commit=False)
@@ -96,10 +103,37 @@ def card_deck_detail_view(request, slug):
     else:
         card_form = CardForm(request.POST)
 
+    if 'add-favorite' in request.POST and request.user.is_authenticated:
+        card_deck_favorite_form = CardDeckFavoriteForm(request.POST)
+        if card_deck_favorite_form.is_valid():
+            new_favorite = card_deck_favorite_form.save(commit=False)
+            new_favorite.deck = card_deck
+            new_favorite.user = request.user
+            new_favorite.save()
+            return redirect('card-deck-detail', slug=slug)
+    else:
+        card_deck_favorite_form = CardDeckFavoriteForm(request.POST)
+
+    if request.user.is_authenticated:
+        try:
+            card_deck_favorite = CardDeckFavorite.objects.get(user=request.user, deck=card_deck)
+        except CardDeckFavorite.DoesNotExist:
+            card_deck_favorite = None
+    else:
+        card_deck_favorite = None
+
+    if 'remove-favorite' in request.POST and request.user.is_authenticated:
+        card_deck_favorite.delete()
+        return redirect('card-deck-detail', slug=slug)
+    else:
+        card_deck_favorite_form = CardDeckFavoriteForm()
+
     context = {
         "card_deck": card_deck,
         "card_form": card_form,
-        "cards": cards
+        "cards": cards,
+        "card_deck_favorite_form": card_deck_favorite_form,
+        "card_deck_favorite": card_deck_favorite
     }
     return render(request, "cards/card_deck_detail.html", context)
 
