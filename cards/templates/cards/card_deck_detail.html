@@ -21,7 +21,7 @@
                             <span class="text body-2 secondary">/ Private</span>
                         {% endif %}
                     </h1>
-                    <div class="pt-1">
+                    <div class="flex align-center pt-1">
                         {% if user.is_authenticated %}
                             {% if card_deck_favorite %}
                                 <form method="POST">
@@ -54,8 +54,9 @@
             </div>
         </div>
 
-        <div class="grid">
+        <div class="grid column-2">
             <a href="{% url 'card-deck-learning' card_deck.slug %}" class="button">Start Learning</a>
+            <a href="{% url 'card-deck-learning' card_deck.slug %}" class="button">Create Card</a>
         </div>
 
         <span class="line"></span>

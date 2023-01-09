@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from taggit.models import Tag
-from django.db.models import Q
+
 
 from .models import *
 from .forms import *
@@ -103,6 +103,16 @@ def card_deck_detail_view(request, slug):
     else:
         card_form = CardForm(request.POST)
 
+    # Check and get the card deck favorite
+    if request.user.is_authenticated:
+        try:
+            card_deck_favorite = CardDeckFavorite.objects.get(user=request.user, deck=card_deck)
+        except CardDeckFavorite.DoesNotExist:
+            card_deck_favorite = None
+    else:
+        card_deck_favorite = None
+
+    # Add favorite form
     if 'add-favorite' in request.POST and request.user.is_authenticated:
         card_deck_favorite_form = CardDeckFavoriteForm(request.POST)
         if card_deck_favorite_form.is_valid():
@@ -114,14 +124,7 @@ def card_deck_detail_view(request, slug):
     else:
         card_deck_favorite_form = CardDeckFavoriteForm(request.POST)
 
-    if request.user.is_authenticated:
-        try:
-            card_deck_favorite = CardDeckFavorite.objects.get(user=request.user, deck=card_deck)
-        except CardDeckFavorite.DoesNotExist:
-            card_deck_favorite = None
-    else:
-        card_deck_favorite = None
-
+    # Remove favorite form
     if 'remove-favorite' in request.POST and request.user.is_authenticated:
         card_deck_favorite.delete()
         return redirect('card-deck-detail', slug=slug)

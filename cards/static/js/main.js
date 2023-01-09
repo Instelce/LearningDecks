@@ -125,3 +125,8 @@ flipCards.forEach(card => {
         inner.classList.toggle('rotate');
     })
 });
+
+// HTMX
+document.body.addEventListener('htmx:configRequest', (event) => {
+    event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+})

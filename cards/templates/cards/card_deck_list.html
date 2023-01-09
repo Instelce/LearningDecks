@@ -86,9 +86,9 @@
                                             <span>by <a href="#" class="link">{{ card_deck.user.username }}</a></span>
                                         {% endif %}
                                         <span>
-                                            {% for favorite in card_deck_favorite %}
+                                            {% for favorite in card_deck_favorites %}
                                                 {% if favorite.deck == card_deck %}
-                                                    / Favorite
+                                                    /Favorite
                                                 {% endif %}
                                             {% endfor %}
                                         </span>
