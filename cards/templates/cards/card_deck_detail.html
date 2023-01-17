@@ -23,17 +23,22 @@
                     </h1>
                     <div class="flex align-center pt-1">
                         {% if user.is_authenticated %}
-                            {% if card_deck_favorite %}
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" name="remove-favorite" class="link no-underline mr-2"><i class="fa-solid fa-heart"></i></button>
-                                </form>
-                            {% else %}
-                                <form method="POST">
-                                    {% csrf_token %}
-                                    <button type="submit" name="add-favorite" class="link no-underline mr-2"><i class="fa-regular fa-heart"></i></button>
-                                </form>
-                            {% endif %}
+                            <span class="flex row align-center">
+                                <span class="space-r text secondary">
+                                    {{ card_deck_favorite_count }}
+                                </span>
+                                {% if card_deck_favorite %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" name="remove-favorite" class="link no-underline mr-2"><i class="fa-solid fa-heart"></i></button>
+                                    </form>
+                                {% else %}
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <button type="submit" name="add-favorite" class="link no-underline mr-2"><i class="fa-regular fa-heart"></i></button>
+                                    </form>
+                                {% endif %}
+                            </span>
                         {% endif %}
                         <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-message"></i></a>
                         {% if card_deck.user == user %}

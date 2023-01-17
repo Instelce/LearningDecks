@@ -4,6 +4,10 @@ from django import forms
 from .models import *
 
 
+class CardDeckCheckAccessForm(forms.Form):
+    unlock_password = forms.CharField(required=True)
+
+
 class CardDeckForm(forms.ModelForm):
     class Meta:
         model = CardDeck

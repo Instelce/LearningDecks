@@ -41,15 +41,24 @@ def card_deck_list_view(request):
         user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False).order_by("-created_at")
 
         # Favorite
-        card_deck_favorites = CardDeckFavorite.objects.filter(user=request.user)
+        user_card_deck_favorites = CardDeckFavorite.objects.filter(user=request.user)
     else:
         user_card_decks = None
-        card_deck_favorites = None
+        user_card_deck_favorites = None
+
+    card_deck_favorites = []
+    for deck in CardDeck.objects.all():
+        deck_favorites = [deck.slug, 0]
+        for favorite in CardDeckFavorite.objects.all():
+            if favorite.deck == deck:
+                deck_favorites[1] += 1
+        card_deck_favorites.append((deck_favorites))
 
     context = {
         'card_decks': card_decks,
         'user_card_decks': user_card_decks,
         'card_deck_favorites': card_deck_favorites,
+        'user_card_deck_favorites': user_card_deck_favorites,
     }
     return render(request, "cards/card_deck_list.html", context)
 
@@ -81,6 +90,25 @@ def card_deck_learning_view(request, slug):
         "cards": cards
     }
     return render(request, "cards/card_deck_learning.html", context)
+
+
+def card_deck_detail_check_access(request, slug):
+    card_deck = CardDeck.objects.get(slug=slug)
+
+    if request.POST:
+        form = CardDeckCheckAccessForm(request.POST)
+        if form.is_valid():
+            if form.cleaned_data['unlock_password'] == card_deck.unlock_password:
+                return redirect('card_deck_detail', slug=slug)
+    else:
+        form = CardDeckCheckAccessForm()
+
+    context = {
+        'card_deck': card_deck,
+        'form': form
+    }
+
+    return render(request, "card_deck_detail_check_access.html", context)
 
 
 def card_deck_detail_view(request, slug):
@@ -131,12 +159,15 @@ def card_deck_detail_view(request, slug):
     else:
         card_deck_favorite_form = CardDeckFavoriteForm()
 
+    card_deck_favorite_count = CardDeckFavorite.objects.filter(deck=card_deck).count()
+
     context = {
         "card_deck": card_deck,
         "card_form": card_form,
         "cards": cards,
         "card_deck_favorite_form": card_deck_favorite_form,
-        "card_deck_favorite": card_deck_favorite
+        "card_deck_favorite": card_deck_favorite,
+        "card_deck_favorite_count": card_deck_favorite_count
     }
     return render(request, "cards/card_deck_detail.html", context)
 
