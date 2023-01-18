@@ -1,5 +1,43 @@
+// Colored Link
+@each $name, $color in $colors {
+    .link-#{$name} {
+        color: $color;
+        position: relative;
+
+        transition: color 0.3s;
+
+        &.no-underline::after {
+            content: none;
+        }
+
+        &::after {
+            content: "";
+            width: 100%;
+            height: 1px;
+            background: var(--color-secondary);
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            transition: transform 0.3s;
+            transform-origin: right;
+            transform: scaleX(0);
+        }
+    
+        &:hover {
+            color: $color;
+        }
+    
+        &:hover::after {
+            width: 100%;
+            transform: scale(1);
+            transform-origin: left;
+        }
+    }
+}
+
+// Default link
 .link {
-    color: $color-accent-light;
+    color: var(--color-accent-light);
     position: relative;
 
     transition: color 0.3s;
@@ -12,7 +50,7 @@
         content: "";
         width: 100%;
         height: 1px;
-        background: $color-gray;
+        background: var(--color-secondary);
         position: absolute;
         left: 0;
         bottom: 2px;
@@ -22,7 +60,7 @@
     }
 
     &:hover {
-        color: $color-accent;
+        color: var(--color-accent);
     }
 
     &:hover::after {

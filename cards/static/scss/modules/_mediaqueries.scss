@@ -1,1 +1,21 @@
-// @media only screen and (max-width: )
+@media all and (min-width: 564px) {
+
+}
+
+@media all and (min-width: 768px) {
+    .main-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media all and (min-width: 992px) {
+    .main-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media all and (min-width: 1200px) {
+    .main-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}

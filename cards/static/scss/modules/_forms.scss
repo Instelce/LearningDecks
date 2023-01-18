@@ -70,7 +70,7 @@ fieldset {
     display: block;
     overflow: hidden;
     font-size: 14px;
-    color: $color-secondary-text;
+    color: var(--color-secondary-text);
   }
   .field-container:focus-within + .form-help {
     max-height: 100%;
@@ -84,7 +84,7 @@ fieldset {
   label {
     order: -1;
     font-size: 14px;
-    color: $color-secondary-text;
+    color: var(--color-secondary-text);
   }
   &.indication + label::after {
     content: "";
@@ -92,7 +92,7 @@ fieldset {
     height: 8px;
     margin-left: .5rem;
     display: inline-block;
-    background: $color-gray;
+    background: var(--color-secondary);
     border-radius: 100px;
     opacity: 0;
     transition: background 0.3s, opacity 0.1s 0.2s;
@@ -134,7 +134,7 @@ fieldset {
     content: "";
     width: 8px;
     height: 8px;
-    background: $color-gray;
+    background: var(--color-secondary);
     border-radius: 100px;
     position: absolute;
     right: -1rem;
@@ -155,12 +155,12 @@ fieldset {
   // Change border color of label::after
   input:focus:invalid + label::after,
   textarea:focus:invalid + label::after {
-    border: 2px solid $color-red;
+    border: 2px solid var(--color-red);
     opacity: 1;
   }
   input:valid + label::after,
   textarea:valid + label::after {
-    border: 2px solid $color-green;
+    border: 2px solid var(--color-green);
     opacity: 1;
   }
 
@@ -208,18 +208,18 @@ textarea {
   position: relative;
   display: inline-block;
 
-  color: $color-secondary-text;
-  border: 1px solid $color-gray;
-  background: $color-background;
-  box-shadow: inset 0px 0px 0px 0px $color-gray;
+  color: var(--color-secondary-text);
+  border: 1px solid var(--color-secondary);
+  background: var(--color-background);
+  box-shadow: inset 0px 0px 0px 0px var(--color-secondary);
 
   transition: box-shadow 0.3s, background 0.3s;
 
   &:hover {
-    box-shadow: inset 0px 0px 0px 4px $color-gray;
+    box-shadow: inset 0px 0px 0px 4px var(--color-secondary);
   }
   &:focus {
-    background: $color-gray;
+    background: var(--color-secondary);
   }
 }
 
@@ -258,7 +258,7 @@ input[type=number]::-webkit-outer-spin-button {
     background: var(--b, var(--background));
     transition: background 0.3s, border-color 0.3s, box-shadow 0.2s;
     &:hover:not(:checked) {
-        box-shadow: inset 0px 0px 0px 4px $color-gray;
+        box-shadow: inset 0px 0px 0px 4px var(--color-secondary);
     }
     &:after {
       content: "";

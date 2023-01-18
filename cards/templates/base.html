@@ -17,24 +17,39 @@
 
     {% block head %}{% endblock head %}
 </head>
-<body data-scroll-container>
+<body>
     <nav class="navbar">
         <ul class="navbar-section">
-            <li><a href="{% url 'home' %}" class="navbar-brand">Learn With Cards</a></li>
-            <li><a href="{% url 'card-deck-list' %}" class="link">Decks</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'dashboard' %}" class="link">Dashboard</a></li>
-            {% endif %}
+            <li>
+                <a href="{% url 'home' %}" class="navbar-brand">Learning Decks</a>
+            <span class="text-gray fw-400">
+                {% block page-name %}{% endblock page-name %}
+            </span>
+        </li>
         </ul>
         <ul class="navbar-section">
             {% if user.is_authenticated %}
-                <li><a href="{% url 'card-deck-create' %}" class="button small">New Deck</a></li>
+                <li><a href="{% url 'card-deck-create' %}" class="button small slash-idle">New Deck</a></li>
             {% else %}
                 <li><a href="{% url 'login' %}" class="link">Login</a></li>
                 <li><a href="{% url 'sign-in' %}" class="button small">Sign In</a></li>
             {% endif %}
         </ul>
     </nav>
+
+    <div class="sidebar">
+        <span><img class="sidebar-logo" src="{% static 'img\learning_deck_logo.svg' %}" alt="Learning Decks Logo"></span>
+        <ul class="sidebar-links">
+            <li><a href="{% url 'card-deck-list' %}" class="link-white"><i class="fa-solid fa-compass text-gray space-r"></i>Explore</a></li>
+            {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}" class="link-white"><i class="fa-solid fa-house text-gray space-r"></i>Home</a></li>
+                <span class="separator"></span>
+                <li><a href="{% url 'profile' %}" class="link-white"><i class="fa-solid fa-user text-gray space-r"></i>Profile</a></li>
+                <li><a href="{% url 'logout' %}" class="link-white"><i class="fa-solid fa-arrow-right-from-bracket text-gray space-r"></i>Logout</a></li>
+            {% endif %}
+        </ul>
+        <span></span>
+    </div>
 
     {% if messages %}
     {% for message in messages %}
@@ -47,17 +62,6 @@
     <div class="main-container">
         <div class="container">
             {% block content %}{% endblock content %}
-        </div>
-        <div class="sidebar">
-            <span>
-                {% block sidebar %}{% endblock sidebar %}
-            </span>
-            <span class="flex column">
-                {% if user.is_authenticated %}
-                    <a href="{% url 'profile' %}" class="link no-underline mb-1"><i class="fa-solid fa-user"></i></a>
-                    <a href="{% url 'logout' %}" class="link no-underline"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
-                {% endif %}
-            </span>
         </div>
     </div>
 

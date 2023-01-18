@@ -13,9 +13,9 @@ let navbar = document.querySelector('.navbar')
 let sidebar = document.querySelector('.sidebar')
 let mainContainer = document.querySelector('.main-container')
 
-sidebar.style = `top: ${navbar.getBoundingClientRect().height}px;`;
-sidebar.style = `padding-bottom: calc(${navbar.getBoundingClientRect().height}px + 2rem);`;
-// mainContainer.style = `padding-bottom: calc(${navbar.getBoundingClientRect().height}px + 2rem);`;
+// sidebar.style = `top: ${navbar.getBoundingClientRect().height}px;`;
+navbar.style = `padding-left: calc(${sidebar.getBoundingClientRect().width}px + 4rem);`;
+mainContainer.style = `margin-left: calc(${sidebar.getBoundingClientRect().width}px + 4rem);`;
 console.log(navbar.getBoundingClientRect().height + 'px');
 
 // Trailer

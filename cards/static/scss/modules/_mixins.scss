@@ -19,6 +19,18 @@
     }
 }
 
+@mixin medias($map, $className, $styleName) {
+    @each $keyMap, $valueMap in $map {
+      @media all and (min-width: map-get($valueMap, min-width)) {
+            .grid {
+                #{$styleName}: map-get($valueMap, $styleName);
+            }
+        }
+    }
+}
+
+@include medias($breakpoints, "main-grid", grid-template-columns);
+
 // Margins
 @include loop('.mt-', 'margin-top', 20, 1, 'rem');
 @include loop('.mr-', 'margin-right', 20, 1, 'rem');
@@ -32,7 +44,7 @@
 @include loop('.pl-', 'padding-left', 20, 1, 'rem');
 @include loop('.px-', 'padding', 20, 1, 'rem');
 // Bold
-@include loop('.b-', 'font-weight', 900, 100, '');
+@include loop('.fw-', 'font-weight', 900, 100, '');
 
 @include colors('.text-', 'color');
 @include colors('.bg-', 'color');

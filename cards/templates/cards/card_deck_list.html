@@ -1,5 +1,9 @@
 {% extends 'base.html' %}
 
+{% block page-name %}
+    / Deck
+{% endblock page-name %}
+
 {% block content %}
     <div>
         <header class="list-header mb-2">
@@ -28,7 +32,7 @@
         <div class="mb-2">
             <h3 class="text sub-1 mb-1"><span class="b-700 space-r">Private</span><span class="b-300">Decks</span></h3>
             {% if user_card_decks %}
-                <div class="grid column-3">
+                <div class="main-grid">
                     {% for card_deck in user_card_decks %}
                         <div class="card">
                             <div class="card-padding">
@@ -73,7 +77,7 @@
         <div>
             <h3 class="text sub-1 mb-1"><span class="b-700 space-r">Community</span><span class="b-300">Decks</span></h3>
             {% if card_decks %}
-                <div class="grid column-3">
+                <div class="main-grid">
                     {% for card_deck in card_decks %}
                         <div {% if card_deck.user == user %}class="card card-own"{% else %}class="card"{% endif %} >
                             <div class="card-padding">
@@ -135,10 +139,6 @@
     </div>
 </div>
 {% endblock content %}
-
-{% block sidebar %}
-    <h2 class="sidebar-title">Decks</h2>
-{% endblock sidebar %}
 
 {% block script %}
 {% endblock script %}
