@@ -16,6 +16,8 @@
     -webkit-backdrop-filter: blur( 2px );
     border-bottom: 1px solid var(--color-secondary);
 
+    transition: margin .3s;
+
     .navbar-brand {
         font-weight: 700;
     }
@@ -25,8 +27,8 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        
-        & > li { margin-right: 2rem; }
+
+        & > li { margin-right: 2rem; display: flex; align-items: center; }
 
         li:last-child { margin-right: 0px; }
     }

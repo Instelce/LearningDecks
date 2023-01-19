@@ -8,64 +8,89 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+    <link rel="icon" href="{% static 'img\learning_deck_logo.svg' %}">
     {% if title %}
-        <title>{{ title }} | Learn With Cards</title>
+        <title>{{ title }} | Learning Decks</title>
     {% else %}
-        <title>Learn With Cards</title>
+        <title>Learning Decks</title>
     {% endif %}
 
     {% block head %}{% endblock head %}
 </head>
 <body>
-    <nav class="navbar">
-        <ul class="navbar-section">
-            <li>
-                <a href="{% url 'home' %}" class="navbar-brand">Learning Decks</a>
-            <span class="text-gray fw-400">
-                {% block page-name %}{% endblock page-name %}
-            </span>
-        </li>
-        </ul>
-        <ul class="navbar-section">
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'card-deck-create' %}" class="button small slash-idle">New Deck</a></li>
-            {% else %}
-                <li><a href="{% url 'login' %}" class="link">Login</a></li>
-                <li><a href="{% url 'sign-in' %}" class="button small">Sign In</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-
-    <div class="sidebar">
-        <span><img class="sidebar-logo" src="{% static 'img\learning_deck_logo.svg' %}" alt="Learning Decks Logo"></span>
-        <ul class="sidebar-links">
-            <li><a href="{% url 'card-deck-list' %}" class="link-white"><i class="fa-solid fa-compass text-gray space-r"></i>Explore</a></li>
-            {% if user.is_authenticated %}
-                <li><a href="{% url 'dashboard' %}" class="link-white"><i class="fa-solid fa-house text-gray space-r"></i>Home</a></li>
+    <div id="loader">
+        <div class="content">
+            <img src="{% static 'img\learning_deck_logo.svg' %}" alt="Loader">
+        </div>
+    </div>
+    
+    <div class="page">
+        <nav class="navbar">
+            <ul class="navbar-section">
+                <li>
+                    <a href="{% url 'home' %}" class="navbar-brand space-r">Learning Decks</a>
+                <span class="text-gray fw-400">
+                    {% block page-name %}{% endblock page-name %}
+                </span>
+            </li>
+            </ul>
+            <ul class="navbar-section">
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'card-deck-create' %}" class="button small slash-idle">New Deck</a></li>
+                {% else %}
+                    <li><a href="{% url 'login' %}" class="link">Login</a></li>
+                    <li><a href="{% url 'sign-in' %}" class="button small">Sign In</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    
+        <div class="sidebar colapse">
+            <div><img class="sidebar-logo" src="{% static 'img\learning_deck_logo.svg' %}" alt="Learning Decks Logo"></div>
+            <ul class="sidebar-links">
+                <li><a href="{% url 'card-deck-list' %}" class="link-white interactable">
+                    <i class="fa-solid fa-compass text-gray"></i>
+                    <span>Explore</span>
+                </a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'dashboard' %}" class="link-white interactable">
+                    <i class="fa-solid fa-house text-gray"></i>
+                    <span>Home</span>
+                </a></li>
                 <span class="separator"></span>
-                <li><a href="{% url 'profile' %}" class="link-white"><i class="fa-solid fa-user text-gray space-r"></i>Profile</a></li>
-                <li><a href="{% url 'logout' %}" class="link-white"><i class="fa-solid fa-arrow-right-from-bracket text-gray space-r"></i>Logout</a></li>
-            {% endif %}
-        </ul>
-        <span></span>
-    </div>
-
-    {% if messages %}
-    {% for message in messages %}
-        <div class="notification {{ message.tags }}">
-            {{ message }}
+                <li><a href="{% url 'profile' %}" class="link-white interactable">
+                    <i class="fa-solid fa-user text-gray"></i>
+                    <span>Profile</span>
+                </a></li>
+                <li><a href="{% url 'logout' %}" class="link-white interactable">
+                    <i class="fa-solid fa-arrow-right-from-bracket text-gray"></i>
+                    <span>Logout</span>
+                </a></li>
+                {% endif %}
+            </ul>
+            <button class="sidebar-colapse interactable">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
         </div>
-    {% endfor %}
-    {% endif %}
-
-    <div class="main-container">
-        <div class="container">
-            {% block content %}{% endblock content %}
+    
+        {% if messages %}
+        {% for message in messages %}
+            <div class="notification {{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+        {% endif %}
+    
+        <div class="main-container">
+            <div class="container">
+                {% block content %}{% endblock content %}
+            </div>
+            <footer>
+                Learning Decks made by <a href="#" class="link space-l">Instelce</a>
+            </footer>
         </div>
+    
+        <span class="trailer"></span>
     </div>
-
-    <span class="trailer"></span>
 
     <script src="https://unpkg.com/htmx.org@1.8.4"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js" integrity="sha512-gmwBmiTVER57N3jYS3LinA9eb8aHrJua5iQD7yqYCKa5x6Jjc7VDVaEA0je0Lu0bP9j7tEjV3+1qUm6loO99Kw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

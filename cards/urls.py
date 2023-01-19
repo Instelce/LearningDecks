@@ -15,6 +15,7 @@ urlpatterns = [
     path("decks/<slug>/delete/", card_deck_delete_view, name="card-deck-delete"),
     path("decks/<deck_slug>/cards/<card_id>/update/", card_update_view, name="card-update"),
     path("decks/<deck_slug>/cards/<card_id>/delete/", card_delete_view, name="card-delete"),
+    path("decks/<slug>/hit-count/", CardDeckHitCountView.as_view(), name="card-deck-hitcount"),
 
     path("decks/<deck_slug>/questions/", card_deck_question_list_view, name="card-deck-question-list"),
 ]

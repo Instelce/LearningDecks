@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from taggit.models import Tag
+from hitcount.views import HitCountDetailView
 
 
 from .models import *
@@ -39,26 +40,38 @@ def card_deck_list_view(request):
     if request.user.is_authenticated:
         # User card decks
         user_card_decks = CardDeck.objects.filter(user=request.user, is_visible=False).order_by("-created_at")
-
-        # Favorite
-        user_card_deck_favorites = CardDeckFavorite.objects.filter(user=request.user)
     else:
         user_card_decks = None
-        user_card_deck_favorites = None
 
+    # Favorite
     card_deck_favorites = []
     for deck in CardDeck.objects.all():
-        deck_favorites = [deck.slug, 0]
+        deck_favorite = [deck.slug, 0, False]
         for favorite in CardDeckFavorite.objects.all():
             if favorite.deck == deck:
-                deck_favorites[1] += 1
-        card_deck_favorites.append((deck_favorites))
+                deck_favorite[1] += 1
+                if request.user.is_authenticated:
+                    if favorite.user == request.user:
+                        deck_favorite[2] = True
+                    else:
+                        deck_favorite[2] = False
+
+        card_deck_favorites.append((deck_favorite))
+
+    # Card in card deck
+    cards_in_card_decks = []
+    for deck in CardDeck.objects.all():
+        cards = [deck.slug, 0]
+        for card in Card.objects.all():
+            if card.deck == deck:
+                cards[1] += 1
+        cards_in_card_decks.append(cards)
 
     context = {
         'card_decks': card_decks,
         'user_card_decks': user_card_decks,
         'card_deck_favorites': card_deck_favorites,
-        'user_card_deck_favorites': user_card_deck_favorites,
+        'cards_in_card_decks': cards_in_card_decks,
     }
     return render(request, "cards/card_deck_list.html", context)
 
@@ -170,6 +183,19 @@ def card_deck_detail_view(request, slug):
         "card_deck_favorite_count": card_deck_favorite_count
     }
     return render(request, "cards/card_deck_detail.html", context)
+
+
+class CardDeckHitCountView(HitCountDetailView):
+    model = CardDeck
+    template_name = 'cards/card_deck_hit_count.html'
+    count_hit = True
+ 
+    def get_context_data(self, **kwargs):
+        context = super(CardDeckHitCountView, self).get_context_data(**kwargs)
+        context.update({
+        })
+        self.object = self.get_object()
+        return context
 
 
 @login_required

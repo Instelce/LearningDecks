@@ -31,6 +31,8 @@ body {
     min-height: 100vh;
     padding-top: 2rem;
     padding-right: 4rem;
+
+    transition: margin .3s;
 }
 
 .main-grid {
@@ -46,4 +48,36 @@ body {
     display: block;
     background: var(--color-secondary);
     margin: 2rem 0px;
+}
+
+#loader {
+    width: 100%;
+    height: 100%;
+    background: var(--color-background);
+    position: fixed;
+    z-index: 10000;
+
+    .content {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            animation: loader .5s infinite;
+        }
+    }
+}
+
+@keyframes loader {
+    0% {
+        transform: scale(1)
+    }
+    50% {
+        transform: scale(1.05)
+    }
+    100% {
+        transform: scale(1)
+    }
 }

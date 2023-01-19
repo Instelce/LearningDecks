@@ -7,7 +7,7 @@
     font-size: 16px;
     background: transparent;
     overflow: hidden;
-    border-radius: 50px;
+    border-radius: 5px;
     box-shadow: 0px 0px 0px 1px inset var(--color-accent);
 
     transition: color 0.3s, box-shadow 0.3s, transform 0.2s ease-in-out;
@@ -25,7 +25,7 @@
         transform: scaleX(0);
         transform-origin: right;
         transition: transform 0.3s;
-        border-radius: 50px;
+        border-radius: 5px;
     }
     &:hover::after {
         transform: scaleX(1);

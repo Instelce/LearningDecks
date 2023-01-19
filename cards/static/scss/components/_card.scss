@@ -1,16 +1,21 @@
 .card {
   height: auto;
-  overflow: hidden;
   display: inline-block;
-  // padding: 1rem 2rem;
-  border: 1px solid var(--color-secondary);
+  position: relative;
   transition: height 0.3s;
+  border-radius: 5px;
+  // border: 1px inset var(--color-background);
+  background: var(--color-secondary);
 
-  .card-padding {
-    padding: 1rem 2rem;
+  .card-wrapper {
+    border-radius: 5px;
+    border: 2px solid var(--color-secondary);
+    transition: border .3s;
   }
 
   .card-header {
+    padding: 1rem 2rem;
+    border-bottom: 2px solid var(--color-background);
     display: flex;
     justify-content: space-between;
 
@@ -24,58 +29,124 @@
       }
     }
 
-    .dates {
+    .infos {
       display: flex;
+      flex-direction: row;
       align-items: center;
-      font-size: 10px;
+      font-size: 14px;
       font-weight: 300;
       color: var(--color-secondary-text);
+
+      & > div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 1rem;
+
+        i, svg {
+          margin-left: .4rem;
+        }
+      }
     }
   }
 
-  .tags-container {
+  .card-tags {
     display: flex;
-    margin-bottom: 0.5rem;
+    padding: 0rem 2rem;
+    border-bottom: 2px solid var(--color-gray);
+    transition: border .3s;
   }
   .tag {
-    margin-right: 0.5rem;
+    margin: .3rem 0px;
+    padding: .2rem .5rem;
     font-size: 12px;
+    transition: background .3s, color .3s;
+    border-radius: 5px;
+
+    &::before {
+      content: "# ";
+    }
+
+    &::after {
+      content: none;
+    }
+
+    &:hover {
+      background: var(--color-accent);
+      color: white;
+    }
+  }
+
+  &.card-own .card-tags {
+    border-bottom: 2px solid var(--color-accent);
+  }
+
+  &:hover .card-wrapper {
+    border-radius: 5px 5px 0px 0px;
+    border-top: 2px solid var(--color-accent);
+    border-right: 2px solid var(--color-accent);
+    border-left: 2px solid var(--color-accent);
+  }
+  &:hover .card-onhover {
+    border-top: 0px solid var(--color-background);
+    border-bottom: 2px solid var(--color-accent);
+    border-right: 2px solid var(--color-accent);
+    border-left: 2px solid var(--color-accent);
+    animation: on-hover-appear .2s .0s forwards;
+  }
+  &:hover .card-tags {
+    border-bottom: 2px solid var(--color-background);
+  }
+
+  .card-onhover {
+    left: 0;
+    top: 0%;
+    width: 100%;
+    height: 0px;
+    z-index: 20;
+    overflow: hidden;
+    position: absolute;
+    pointer-events: none;
+    opacity: 0;
+
+    border-radius: 0px 0px 5px 5px;
+    background: var(--color-secondary);
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border: 2px solid var(--color-background);
+
+    transition: opacity .3s, border .3s, border-top 0s;
   }
   .card-body {
+    padding: 1rem 2rem;
+    color: var(--color-white);
   }
 
   .card-buttons {
-    display: flex;
-  }
-
-  .card-main-button {
-    width: 100%;
-    border: none;
-    border-top: 1px solid var(--color-secondary);
-  }
-
-  .card-secondary-buttons {
-    width: 0px;
+    height: 100%;
     display: grid;
-    grid-template-columns: auto auto;
-    transition: transform 0.3s, width 0.3s ease;
+    grid-template-rows: fill;
+    border-left: 2px solid var(--color-background);
 
-    button,
     a {
-      border: none;
-      border-top: 1px solid var(--color-secondary);
-      border-right: 1px solid var(--color-secondary);
-    }
-    a:last-child {
-      border-right: none;
-    }
-  }
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 5px 0px 0px 5px;
+      border-bottom: 2px solid var(--color-background);
+      transition: background .3s;
 
-  &:hover .card-secondary-buttons {
-    width: 100%;
-  }
-  &:hover .card-secondary-buttons a:first-child {
-    border-left: 1px solid var(--color-secondary);
+      &:last-child {
+        border-radius: 5px 0px 0px 0px;
+        border-bottom: 0px solid var(--color-background);
+      }
+
+      &:hover {
+        background: var(--color-accent);
+      }
+    }
   }
 }
 
@@ -121,5 +192,16 @@
   }
 }
 
-
+@keyframes on-hover-appear {
+  0% {
+    height: 0px;
+    opacity: 0;
+  }
+  100% {
+    height: auto;
+    top: 100%;
+    pointer-events: initial;
+    opacity: 1;
+  }
+}
 

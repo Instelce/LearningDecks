@@ -37,7 +37,8 @@ INSTALLED_APPS = [
 
     "cards.apps.CardsConfig",
     "users.apps.UsersConfig",
-    
+
+    "hitcount",
     "taggit",
     "django_browser_reload"
 ]

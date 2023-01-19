@@ -130,3 +130,32 @@ flipCards.forEach(card => {
 document.body.addEventListener('htmx:configRequest', (event) => {
     event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
 })
+
+// Sidebar
+const sidebarColapse = document.querySelector('.sidebar-colapse')
+console.log(sidebarColapse);
+sidebarColapse.addEventListener('click', (e) => {
+    sidebar.classList.toggle('colapse');
+    navbar.style = `padding-left: calc(${sidebar.getBoundingClientRect().width}px + 4rem);`;
+    mainContainer.style = `margin-left: calc(${sidebar.getBoundingClientRect().width}px + 4rem);`;
+})
+
+// Loader
+const loader = document.getElementById('loader')
+const wait = (delay = 0) =>
+  new Promise(resolve => setTimeout(resolve, delay));
+
+const setVisible = (elementOrSelector, visible) => 
+  (typeof elementOrSelector === 'string'
+    ? document.querySelector(elementOrSelector)
+    : elementOrSelector
+  ).style = visible ? 'display: block;' : 'display: none;';
+
+setVisible('.page', false);
+setVisible('#loader', true);
+
+document.addEventListener('DOMContentLoaded', () =>
+  wait(500).then(() => {
+    setVisible('.page', true);
+    setVisible('#loader', false);
+  }));

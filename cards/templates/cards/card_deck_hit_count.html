@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+
+{% block script %}
+    <script>
+        window.location.href = "{% url 'card-deck-detail' object.slug %}"
+    </script>
+{% endblock script %}

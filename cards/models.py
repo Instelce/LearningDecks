@@ -4,7 +4,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 from django.db.models import Q
-
+from hitcount.models import HitCount, HitCountMixin
+from django.contrib.contenttypes.fields import GenericRelation
 
 class CardDeckQuerySet(models.QuerySet):
     def search(self, query=None):
@@ -22,7 +23,7 @@ class CardDeckManager(models.Manager):
         return self.get_queryset().search(query=query)
 
 
-class CardDeck(models.Model):
+class CardDeck(models.Model, HitCountMixin):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     name = models.CharField(max_length=256)
@@ -37,10 +38,15 @@ class CardDeck(models.Model):
     updated_at = models.DateField(auto_now=True)
     unlock_password = models.IntegerField(default=0, blank=True)
 
+    hit_count_generic = GenericRelation(HitCount, object_id_field='object_pk', related_query_name='hit_count_generic_relation')
+
     objects = CardDeckManager()
 
     def __str__(self):
         return f"{self.name} Deck - {self.user.username}"
+
+    def current_hit_count(self):
+        return self.hit_count.hits
 
 
 class CardDeckFavorite(models.Model):

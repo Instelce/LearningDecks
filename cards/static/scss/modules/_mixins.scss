@@ -43,8 +43,9 @@
 @include loop('.pb-', 'padding-bottom', 20, 1, 'rem');
 @include loop('.pl-', 'padding-left', 20, 1, 'rem');
 @include loop('.px-', 'padding', 20, 1, 'rem');
-// Bold
+// Font
 @include loop('.fw-', 'font-weight', 900, 100, '');
+@include loop('.fs-', 'font-size', 10, 1, 'rem');
 
 @include colors('.text-', 'color');
 @include colors('.bg-', 'color');
