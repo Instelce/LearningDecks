@@ -43,7 +43,8 @@ window.onmousemove = e => {
 }
 
 // Interactable elements
-const interactableElements = document.querySelectorAll('.link, .button, .field-container')
+// const interactableElements = document.querySelectorAll('.link, .button, .field-container')
+var interactableElements = [].slice.call(document.querySelectorAll("*[class*='button-'], .button, .link, *[class*='link-'], .field-container"));
 
 interactableElements.forEach(element => {
     element.classList.add('interactable')
@@ -80,11 +81,11 @@ const replyFormContainer = document.querySelectorAll('.reply-form-container')
 console.log(replyButtons);
 replyButtons.forEach(button => {
     let questionId = button.classList[1]
-    let replyFromContainer = document.
-    console.log(button.classList[1]);
-    button.addEventListener('click', (e) => {
-        e.preventDefault()
-    })
+    // let replyFromContainer = document.
+    // console.log(button.classList[1]);
+    // button.addEventListener('click', (e) => {
+    //     e.preventDefault()
+    // })
 });
 
 // Dropdown

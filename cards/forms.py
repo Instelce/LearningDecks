@@ -28,6 +28,8 @@ class CardDeckFavoriteForm(forms.ModelForm):
 
 
 class CardForm(forms.ModelForm):
+    definition = forms.CharField()
+
     class Meta:
         model = Card
         fields = [

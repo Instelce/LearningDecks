@@ -121,6 +121,11 @@
   .card-body {
     padding: 1rem 2rem;
     color: var(--color-white);
+
+    p {
+      overflow-wrap: break-all;
+      hyphens: manual;
+    }
   }
 
   .card-buttons {

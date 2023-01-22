@@ -174,13 +174,19 @@ def card_deck_detail_view(request, slug):
 
     card_deck_favorite_count = CardDeckFavorite.objects.filter(deck=card_deck).count()
 
+    cards_in_card_decks = 0
+    for card in Card.objects.all():
+        if card.deck == card_deck:
+            cards_in_card_decks += 1
+
     context = {
         "card_deck": card_deck,
         "card_form": card_form,
         "cards": cards,
         "card_deck_favorite_form": card_deck_favorite_form,
         "card_deck_favorite": card_deck_favorite,
-        "card_deck_favorite_count": card_deck_favorite_count
+        "card_deck_favorite_count": card_deck_favorite_count,
+        "cards_in_card_decks": cards_in_card_decks
     }
     return render(request, "cards/card_deck_detail.html", context)
 

@@ -8,12 +8,15 @@
 
 {% block content %}
     <div>
-        <div class="line-header">
-            <div class="flex column fill-w">
-                <div class="flex space-between">
-                    <h1 class="text title-1">
-                        {{ card_deck.name }}
-                        <span class="text body-2 secondary">by 
+        <div class="detail-header">
+            <div class="flex column space-between">
+                <div>
+                    <div class="detail-title">
+                        <h1>
+                            {{ card_deck.name }}
+                        </h1>
+                        <span>
+                            /
                             <a href="#" class="link">
                                 {% if card_deck.user == user %}
                                     You
@@ -21,57 +24,62 @@
                                     {{ card_deck.user.username }}
                                 {% endif %}
                             </a>
+                            {% if card_deck.is_visible == False %}
+                                <i class="ml-1 fa-solid fa-lock text-gray"></i>
+                            {% endif %}
+                            {% if card_deck.user == user %}
+                                <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline ml-1"><i class="fa-solid fa-pen"></i></a>
+                                <a href="{% url 'card-deck-delete' card_deck.slug %}?next={{ request.path|urlencode }}" class="link no-underline ml-1"><i class="fa-solid fa-trash"></i></a>
+                            {% endif %}
                         </span>
-                        {% if card_deck.is_visible == False %}
-                            <span class="text body-2 secondary">/ Private</span>
-                        {% endif %}
-                    </h1>
-                    <div class="flex align-center pt-1">
-                        {% if user.is_authenticated %}
-                            <span class="flex row align-center">
-                                <span class="space-r text secondary">
-                                    {{ card_deck_favorite_count }}
-                                </span>
-                                {% if card_deck_favorite %}
-                                    <form method="POST">
-                                        {% csrf_token %}
-                                        <button type="submit" name="remove-favorite" class="link no-underline mr-2"><i class="fa-solid fa-heart"></i></button>
-                                    </form>
-                                {% else %}
-                                    <form method="POST">
-                                        {% csrf_token %}
-                                        <button type="submit" name="add-favorite" class="link no-underline mr-2"><i class="fa-regular fa-heart"></i></button>
-                                    </form>
-                                {% endif %}
-                            </span>
-                        {% endif %}
-                        <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-message"></i></a>
-                        {% if card_deck.user == user %}
-                            <a href="{% url 'card-deck-update' card_deck.slug %}" class="link no-underline mr-2"><i class="fa-solid fa-pen"></i></a>
-                            <a href="{% url 'card-deck-delete' card_deck.slug %}?next={{ request.path|urlencode }}" class="link no-underline"><i class="fa-solid fa-trash"></i></a>
-                        {% endif %}
                     </div>
-                </div>
-                <div class="tags-container flex mb-2">
-                    <span class="text secondary mr-1">Tags</span>
-                    <div>
+                    <div class="detail-tags">
                         {% for tag in card_deck.tags.all %}
-                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link space-r">{{ tag }}</a>
+                            <a href="{% url 'card-deck-tagged' tag.slug %}" class="tag link">{{ tag }}</a>
                         {% endfor %}
                     </div>
                 </div>
+                <div class="detail-infos">
+                    <div>
+                        <span>{{ card_deck.current_hit_count }}</span>
+                        <i class="fa-solid fa-eye text-gray"></i>
+                    </div>
+                    <div>
+                        <span>{{ cards_in_card_decks }}</span>
+                        <svg width="19" height="16" viewBox="0 0 19 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15.6758 4.59091V14.1364C15.6758 14.498 15.5321 14.8449 15.2764 15.1006C15.0206 15.3563 14.6738 15.5 14.3121 15.5H2.03942C1.67776 15.5 1.33091 15.3563 1.07518 15.1006C0.81945 14.8449 0.675781 14.498 0.675781 14.1364V4.59091C0.675781 4.22925 0.81945 3.8824 1.07518 3.62667C1.33091 3.37094 1.67776 3.22727 2.03942 3.22727H14.3121C14.6738 3.22727 15.0206 3.37094 15.2764 3.62667C15.5321 3.8824 15.6758 4.22925 15.6758 4.59091ZM17.0394 0.5H4.08487C3.90404 0.5 3.73062 0.571834 3.60275 0.6997C3.47489 0.827566 3.40305 1.00099 3.40305 1.18182C3.40305 1.36265 3.47489 1.53607 3.60275 1.66394C3.73062 1.7918 3.90404 1.86364 4.08487 1.86364H17.0394V12.0909C17.0394 12.2717 17.1112 12.4452 17.2391 12.573C17.367 12.7009 17.5404 12.7727 17.7212 12.7727C17.9021 12.7727 18.0755 12.7009 18.2034 12.573C18.3312 12.4452 18.4031 12.2717 18.4031 12.0909V1.86364C18.4031 1.50198 18.2594 1.15513 18.0037 0.8994C17.7479 0.643668 17.4011 0.5 17.0394 0.5Z" fill="#626e77"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <span>{{ card_deck_favorite_count }}</span>
+                        <i class="fa-solid fa-heart text-gray"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="detail-description">
                 <p>{{ card_deck.description }}</p>
             </div>
         </div>
 
-        <div class="grid column-2">
-            <a href="{% url 'card-deck-learning' card_deck.slug %}" class="button">Start Learning</a>
-            <a href="{% url 'card-deck-learning' card_deck.slug %}" class="button">Create Card</a>
+        <div class="detail-buttons">
+            {% if user.is_authenticated %}
+                {% if card_deck_favorite %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="remove-favorite" class="button-red"><i class="fa-solid fa-heart"></i></button>
+                    </form>
+                {% else %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        <button type="submit" name="add-favorite" class="button-red"><i class="fa-regular fa-heart"></i></button>
+                    </form>
+                {% endif %}
+            {% endif %}
+            <a href="{% url 'card-deck-question-list' card_deck.slug %}" class="button"><i class="fa-solid fa-message"></i></a>
+            <a href="{% url 'card-deck-learning' card_deck.slug %}" class="button button-fill">Start Learning</a>
         </div>
 
-        <span class="line"></span>
-
-        <div>
+        {% comment %} <div>
             <div class="dropdown">
                 <div class="toggle">
                     <h3 class="text sub-1">Lesson</h3>
@@ -83,42 +91,36 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <span class="line"></span>
+        </div> {% endcomment %}
 
         {% if card_deck.user == user %}
-            <form method="POST" class="form-inline">
+            <form method="POST" class="form-inline detail-creation-card">
                 {% csrf_token %}
-                <div class="flex centered">
-                    <h2 class="text body-2 horizontal uppercase">New Card</h2>
-                </div>
-                <div>
-                    {% for field in card_form %}
-                        <fieldset class="form-group">
-                            <div class="field-container indication">
-                                {{ field }}
-                                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {% for field in card_form %}
+                    <fieldset class="form-group">
+                        <div class="field-container indication">
+                            {{ field }}
+                            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        </div>
+                        {% if field.help_text %}
+                            <div class="form-help">
+                                {{ field.help_text }}
                             </div>
-                            {% if field.help_text %}
-                                <div class="form-help">
-                                    {{ field.help_text }}
-                                </div>
-                            {% endif %}
-                        </fieldset>
-                    {% endfor %}
-                </div>
-                <button type="submit" name="create-card" class="button small"><i class="fa-solid fa-plus"></i></button>
+                        {% endif %}
+                    </fieldset>
+                {% endfor %}
+                <button type="submit" name="create-card" class="button small">Create</button>
             </form>
-            <span class="line"></span>
         {% endif %}
 
-        <div class="grid column-2">
+        <div class="main-grid">
             {% for card in cards %}
                 <div class="card">
-                    <div class="card-padding">
-                        <div class="title flex align-center space-between">
-                            <h4 class="text sub-2">{{ card.term }}</h4>
+                    <div class="card-wrapper">
+                        <div class="card-header">
+                            <div class="title">
+                                <h4>{{ card.term }}</h4>
+                            </div>
                             <div>
                                 {% if card.deck.user == user %}
                                     <a href="{% url 'card-update' card.deck.slug card.id %}" class="link no-underline mr-1"><i class="fa-solid fa-pen"></i></a>
@@ -126,9 +128,11 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <p class="text secondary">
-                            {{ card.definition }}
-                        </p>
+                        <div class="card-onhover">
+                            <div class="card-body">
+                                <p>{{ card.definition }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
