@@ -6,7 +6,7 @@ Site to learn with card and a beautiful design. <del>Clone of Quizlet</del>
 
 `python -m venv env`
 
-`env/Script/activate`
+`env/Scripts/activate`
 
 `pip install -r requirements.txt`
 
