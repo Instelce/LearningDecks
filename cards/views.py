@@ -79,7 +79,10 @@ def card_deck_list_view(request):
 def card_deck_tagged(request, slug):
     tag = get_object_or_404(Tag, slug=slug)
     card_decks = CardDeck.objects.filter(tags=tag, is_visible=True).order_by("-created_at") # Filter with tag
-    user_card_decks = CardDeck.objects.filter(tags=tag, user=request.user, is_visible=False).order_by("-created_at") if request.user else None
+    if request.user.is_authenticated:
+        user_card_decks = CardDeck.objects.filter(tags=tag, user=request.user, is_visible=False).order_by("-created_at")
+    else:
+        user_card_decks = None
 
     context = {
         'tag': tag,
